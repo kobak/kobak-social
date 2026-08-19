@@ -1,0 +1,321 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kobak social 1.4.0\n"
+"Report-Msgid-Bugs-To: https://kobak.org/plugins/\n"
+"Language: hu_HU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: kobak-social\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Bluesky credentials are missing."
+msgstr "Hiányoznak a Bluesky adatok."
+
+#, php-format
+msgid "Bluesky login failed: %s"
+msgstr "A Bluesky belépés sikertelen: %s"
+
+#, php-format
+msgid "Bluesky error (HTTP %1$d): %2$s"
+msgstr "Bluesky hiba (HTTP %1$d): %2$s"
+
+msgid "Mastodon credentials are missing."
+msgstr "Hiányoznak a Mastodon adatok."
+
+#, php-format
+msgid "Mastodon error (HTTP %1$d): %2$s"
+msgstr "Mastodon hiba (HTTP %1$d): %2$s"
+
+msgid "No LinkedIn access token."
+msgstr "Nincs LinkedIn access token."
+
+#, php-format
+msgid "LinkedIn userinfo error (HTTP %1$d): %2$s"
+msgstr "LinkedIn userinfo hiba (HTTP %1$d): %2$s"
+
+msgid "No featured image."
+msgstr "Nincs kiemelt kép."
+
+msgid "The featured image file could not be found."
+msgstr "A kiemelt kép fájlja nem található."
+
+#, php-format
+msgid "Could not initialise the image upload: %s"
+msgstr "A képfeltöltés inicializálása sikertelen: %s"
+
+msgid "The image could not be read."
+msgstr "A kép nem olvasható."
+
+#, php-format
+msgid "Image upload failed (HTTP %d)."
+msgstr "Képfeltöltési hiba (HTTP %d)."
+
+msgid "LinkedIn is disabled."
+msgstr "A LinkedIn ki van kapcsolva."
+
+msgid "The LinkedIn access token is missing."
+msgstr "Hiányzik a LinkedIn access token."
+
+#, php-format
+msgid "LinkedIn error (HTTP %1$d): %2$s"
+msgstr "LinkedIn hiba (HTTP %1$d): %2$s"
+
+msgid "No access token has been entered."
+msgstr "Nincs beírva access token."
+
+#, php-format
+msgid "The value entered is only %d characters long. A LinkedIn access token is much longer, usually 300-500 characters. You have probably pasted the Client ID or the Client Secret instead of the token."
+msgstr "A beírt érték csak %d karakter. Egy LinkedIn access token ennél jóval hosszabb, jellemzően 300-500 karakter. Valószínűleg a Client ID vagy a Client Secret került ide a token helyett."
+
+msgid "The token is invalid or has expired (401). Generate a new one in your LinkedIn app."
+msgstr "A token érvénytelen vagy lejárt (401). Generálj újat a LinkedIn appban."
+
+msgid "The token works but a permission is missing (403). You need the openid, profile and w_member_social scopes."
+msgstr "A token él, de hiányzik egy jogosultság (403). Kell az openid, a profile és a w_member_social is."
+
+#, php-format
+msgid "Unexpected response (HTTP %1$d): %2$s"
+msgstr "Váratlan válasz (HTTP %1$d): %2$s"
+
+msgid "unknown name"
+msgstr "ismeretlen név"
+
+msgid "Let&#8217;s talk about it:"
+msgstr "Beszélgessünk róla:"
+
+msgid "This post is also published here:"
+msgstr "Ez a bejegyzés megjelent itt is:"
+
+msgid "Join the conversation"
+msgstr "Szólj hozzá!"
+
+msgid "Replies, likes and reposts over there show up under this post as well."
+msgstr "Ha ott hozzászólsz, lájkolsz vagy megosztod, az itt is megjelenik a bejegyzés alatt."
+
+msgid "Commenting is turned off on this site. Reply on Bluesky or Mastodon instead: answers there also appear underneath this post."
+msgstr "A hozzászólás ezen az oldalon ki van kapcsolva. Kommentelj Bluesky-on vagy Mastodonon, ott válaszolok, és a hozzászólásod a bejegyzés alatt is megjelenik."
+
+msgid "Commenting is disabled"
+msgstr "A hozzászólás kikapcsolva"
+
+msgid "Saved - leave empty to keep it"
+msgstr "Mentve – hagyd üresen, ha marad"
+
+msgid "Delete the stored value"
+msgstr "A mentett érték törlése"
+
+msgid "kobak social: a share did not go out."
+msgstr "kobak social: egy megosztás nem ment ki."
+
+msgid "Open the settings to retry"
+msgstr "Nyisd meg a beállításokat az újrapróbáláshoz"
+
+msgid "kobak social: the LinkedIn token is about to expire."
+msgstr "kobak social: a LinkedIn token hamarosan lejár."
+
+msgid "LinkedIn tokens last about 60 days. Generate a new one and paste it into the settings before it stops working."
+msgstr "A LinkedIn tokenje nagyjából 60 napig él. Generálj újat, és másold be a beállításokba, mielőtt leáll."
+
+msgid "Settings saved."
+msgstr "Beállítások elmentve."
+
+msgid "LinkedIn connection failed."
+msgstr "A LinkedIn kapcsolat nem működik."
+
+msgid "LinkedIn connection works."
+msgstr "A LinkedIn kapcsolat rendben."
+
+#, php-format
+msgid "Signed in as %s. The author URN has been saved."
+msgstr "Bejelentkezve mint %s. A szerző URN elmentve."
+
+msgid "LinkedIn test failed."
+msgstr "A LinkedIn teszt hibára futott."
+
+msgid "LinkedIn test posted."
+msgstr "A LinkedIn teszt kiment."
+
+msgid "Open the post"
+msgstr "Poszt megnyitása"
+
+msgid "Automatic sharing is switched off, so nothing was retried. Turn it on above and try again."
+msgstr "Az automatikus megosztás ki van kapcsolva, ezért semmi nem futott le újra. Kapcsold be fent, és próbáld megint."
+
+#, php-format
+msgid "%d post still could not be shared. See the log below."
+msgid_plural "%d posts still could not be shared. See the log below."
+msgstr[0] "%d bejegyzés így sem ment ki. A napló lent van."
+msgstr[1] "%d bejegyzés így sem ment ki. A napló lent van."
+
+msgid "Everything went out this time."
+msgstr "Most minden kiment."
+
+msgid "The test ran with your latest post. See the result in the log below."
+msgstr "A teszt lefutott a legutóbbi bejegyzéssel. Az eredmény lent, a naplóban."
+
+msgid "Automatically shares every new post to Bluesky and Mastodon. LinkedIn is available as an optional extra."
+msgstr "Publikáláskor automatikusan kiposztol Bluesky-ra és Mastodonra. A LinkedIn külön, választható lehetőség."
+
+msgid "Automatic sharing"
+msgstr "Automatikus megosztás"
+
+msgid "Enabled"
+msgstr "Bekapcsolva"
+
+msgid "Runs only when a post is published for the first time. Editing an existing post never shares it again."
+msgstr "Csak új bejegyzés publikálásakor fut le. Meglévő poszt szerkesztése soha nem posztol újra."
+
+msgid "Handle"
+msgstr "Handle"
+
+msgid "App password"
+msgstr "App jelszó"
+
+msgid "Bluesky: Settings, Privacy and security, App passwords. Do not use your account password."
+msgstr "Bluesky: Settings, Privacy and security, App passwords. Ne a fiókod jelszavát add meg."
+
+msgid "Instance"
+msgstr "Instance"
+
+msgid "Username"
+msgstr "Felhasználónév"
+
+msgid "Without the @ sign. Only used to link to your profile on older posts."
+msgstr "Kukac nélkül. Csak arra kell, hogy a régebbi bejegyzéseknél a profilodra tudjunk linkelni."
+
+msgid "Access token"
+msgstr "Access token"
+
+#, php-format
+msgid "Mastodon: Preferences, Development, New application. Required scope: %s."
+msgstr "Mastodon: Preferences, Development, New application. Szükséges jogosultság: %s."
+
+msgid "LinkedIn (optional)"
+msgstr "LinkedIn (választható)"
+
+msgid "Share to LinkedIn"
+msgstr "Megosztás LinkedInre"
+
+msgid "Optional. LinkedIn does not hand out shared API access, so you have to create your own LinkedIn app and generate a token for it. Bluesky and Mastodon work without any of this."
+msgstr "Választható. A LinkedIn nem ad közös API-hozzáférést, ezért saját LinkedIn appot kell létrehoznod, és ahhoz tokent generálnod. A Bluesky és a Mastodon mindezek nélkül működik."
+
+#, php-format
+msgid "Generate it with the LinkedIn OAuth token generator, not the Client Secret. Required scopes: %s."
+msgstr "A LinkedIn OAuth token generátorával állítsd elő, nem a Client Secret kell ide. Szükséges jogosultságok: %s."
+
+msgid "LinkedIn tokens expire after about 60 days and have to be generated again."
+msgstr "A LinkedIn tokenek kb. 60 nap után lejárnak, akkor újat kell generálni."
+
+#, php-format
+msgid "The stored token was saved %d day ago."
+msgid_plural "The stored token was saved %d days ago."
+msgstr[0] "A mentett token %d napja került be."
+msgstr[1] "A mentett token %d napja került be."
+
+msgid "Author URN"
+msgstr "Szerző URN"
+
+msgid "Leave it empty. The plugin looks it up and fills it in on the first share."
+msgstr "Hagyd üresen. A plugin az első megosztásnál lekéri és beírja magától."
+
+msgid "API version"
+msgstr "API verzió"
+
+msgid "YYYYMM format. LinkedIn supports each version for about a year, then this has to be bumped."
+msgstr "ÉÉÉÉHH formátum. A LinkedIn nagyjából egy évig támogat egy verziót, utána itt kell átírni."
+
+msgid "IndieWeb and comments"
+msgstr "IndieWeb és hozzászólások"
+
+msgid "Syndication box"
+msgstr "Szindikációs doboz"
+
+msgid "Show it under each post"
+msgstr "Megjelenítés minden bejegyzés alatt"
+
+#, php-format
+msgid "Lists where the post also appeared and invites readers to reply there. The links carry the %s microformat. If you also run a webmention receiver and Brid.gy, that is what lets replies find their way back. This plugin does not receive webmentions itself."
+msgstr "Felsorolja, hol jelent meg még a bejegyzés, és arra hívja az olvasót, hogy ott szóljon hozzá. A linkek %s jelöléssel mennek ki. Ha emellett webmention-fogadó plugint és Bridgyt is használsz, ettől találnak vissza a válaszok. Maga ez a plugin nem fogad webmentiont."
+
+msgid "Local commenting"
+msgstr "Helyi kommentelés"
+
+msgid "Turn it off, so people comment on social instead"
+msgstr "Kikapcsolva, hogy social felületen kommenteljenek"
+
+msgid "This only hides the visitor comment form. It does not touch webmentions, so if you use a webmention plugin, replies collected by Brid.gy still show up under the post."
+msgstr "Ez csak a látogatói űrlapot rejti el. A webmentionhöz nem nyúl, tehát ha használsz webmention plugint, a Bridgy által összegyűjtött válaszok továbbra is megjelennek a bejegyzés alatt."
+
+msgid "Message"
+msgstr "Szöveg"
+
+msgid "Language"
+msgstr "Nyelv"
+
+msgid "Two-letter code sent along with the post, so timelines and translation prompts get it right. Leave it empty to follow the site language."
+msgstr "Kétbetűs nyelvkód, ami a poszttal együtt megy ki, hogy az idővonalak jól szűrjenek. Hagyd üresen, ha az oldal nyelvét szeretnéd."
+
+msgid "Template"
+msgstr "Sablon"
+
+#, php-format
+msgid "Available tags: %s."
+msgstr "Használható változók: %s."
+
+msgid "Limits are 300 characters on Bluesky, 500 on Mastodon and 2800 on LinkedIn. The excerpt is shortened automatically; the title and the link are always kept."
+msgstr "A limit Bluesky-n 300, Mastodonon 500, LinkedInen 2800 karakter. A kivonat automatikusan rövidül, a cím és a link mindig megmarad."
+
+msgid "Save settings"
+msgstr "Beállítások mentése"
+
+msgid "Check the LinkedIn connection"
+msgstr "LinkedIn kapcsolat ellenőrzése"
+
+msgid "Checks whether the token works and stores your author URN. It does not post anything. Worth doing before you run a real share."
+msgstr "Megnézi, hogy él-e a token, és eltárolja a szerző URN-t. Semmit nem posztol. Érdemes ezzel kezdeni, mielőtt éles megosztást indítanál."
+
+msgid "Test LinkedIn only"
+msgstr "Teszt csak LinkedInre"
+
+msgid "Shares your latest published post to LinkedIn only. Bluesky and Mastodon are left alone, so there is just one post to delete afterwards."
+msgstr "A legutóbbi megjelent bejegyzést kizárólag LinkedInre posztolja ki. A Bluesky-t és a Mastodont nem érinti, tehát csak egy posztot kell utána törölni."
+
+msgid "This creates a real LinkedIn post. Continue?"
+msgstr "Ez egy valódi LinkedIn posztot tesz ki. Folytatod?"
+
+msgid "Post a test to LinkedIn"
+msgstr "Teszt posztolás LinkedInre"
+
+msgid "Test everything"
+msgstr "Teszt mindenhová"
+
+msgid "Shares your latest published post to every enabled platform. These are real posts, so they will be visible."
+msgstr "A legutóbbi megjelent bejegyzést kiposztolja minden bekapcsolt platformra. Ezek valódi posztok, tehát látszani fognak."
+
+msgid "This creates real posts on every enabled platform. Continue?"
+msgstr "Ez valódi posztokat tesz ki minden bekapcsolt platformra. Folytatod?"
+
+msgid "Share a test now"
+msgstr "Teszt megosztás most"
+
+msgid "Failed shares"
+msgstr "Sikertelen megosztások"
+
+msgid "These posts did not go out after three attempts. Retrying only touches the platforms that are still missing."
+msgstr "Ezek a bejegyzések három próbálkozás után sem mentek ki. Az újrapróbálás csak a hiányzó platformokra megy ki."
+
+msgid "Retry now"
+msgstr "Újrapróbálás most"
+
+msgid "Log"
+msgstr "Napló"
+
+msgid "Nothing here yet."
+msgstr "Még nincs bejegyzés."
+
+msgid "When"
+msgstr "Mikor"
+
+msgid "What happened"
+msgstr "Mi történt"

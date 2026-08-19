@@ -1,0 +1,319 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kobak social 1.4.0\n"
+"Report-Msgid-Bugs-To: https://kobak.org/plugins/\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: kobak-social\n"
+
+msgid "Bluesky credentials are missing."
+msgstr ""
+
+#, php-format
+msgid "Bluesky login failed: %s"
+msgstr ""
+
+#, php-format
+msgid "Bluesky error (HTTP %1$d): %2$s"
+msgstr ""
+
+msgid "Mastodon credentials are missing."
+msgstr ""
+
+#, php-format
+msgid "Mastodon error (HTTP %1$d): %2$s"
+msgstr ""
+
+msgid "No LinkedIn access token."
+msgstr ""
+
+#, php-format
+msgid "LinkedIn userinfo error (HTTP %1$d): %2$s"
+msgstr ""
+
+msgid "No featured image."
+msgstr ""
+
+msgid "The featured image file could not be found."
+msgstr ""
+
+#, php-format
+msgid "Could not initialise the image upload: %s"
+msgstr ""
+
+msgid "The image could not be read."
+msgstr ""
+
+#, php-format
+msgid "Image upload failed (HTTP %d)."
+msgstr ""
+
+msgid "LinkedIn is disabled."
+msgstr ""
+
+msgid "The LinkedIn access token is missing."
+msgstr ""
+
+#, php-format
+msgid "LinkedIn error (HTTP %1$d): %2$s"
+msgstr ""
+
+msgid "No access token has been entered."
+msgstr ""
+
+#, php-format
+msgid "The value entered is only %d characters long. A LinkedIn access token is much longer, usually 300-500 characters. You have probably pasted the Client ID or the Client Secret instead of the token."
+msgstr ""
+
+msgid "The token is invalid or has expired (401). Generate a new one in your LinkedIn app."
+msgstr ""
+
+msgid "The token works but a permission is missing (403). You need the openid, profile and w_member_social scopes."
+msgstr ""
+
+#, php-format
+msgid "Unexpected response (HTTP %1$d): %2$s"
+msgstr ""
+
+msgid "unknown name"
+msgstr ""
+
+msgid "Let&#8217;s talk about it:"
+msgstr ""
+
+msgid "This post is also published here:"
+msgstr ""
+
+msgid "Join the conversation"
+msgstr ""
+
+msgid "Replies, likes and reposts over there show up under this post as well."
+msgstr ""
+
+msgid "Commenting is turned off on this site. Reply on Bluesky or Mastodon instead: answers there also appear underneath this post."
+msgstr ""
+
+msgid "Commenting is disabled"
+msgstr ""
+
+msgid "Saved - leave empty to keep it"
+msgstr ""
+
+msgid "Delete the stored value"
+msgstr ""
+
+msgid "kobak social: a share did not go out."
+msgstr ""
+
+msgid "Open the settings to retry"
+msgstr ""
+
+msgid "kobak social: the LinkedIn token is about to expire."
+msgstr ""
+
+msgid "LinkedIn tokens last about 60 days. Generate a new one and paste it into the settings before it stops working."
+msgstr ""
+
+msgid "Settings saved."
+msgstr ""
+
+msgid "LinkedIn connection failed."
+msgstr ""
+
+msgid "LinkedIn connection works."
+msgstr ""
+
+#, php-format
+msgid "Signed in as %s. The author URN has been saved."
+msgstr ""
+
+msgid "LinkedIn test failed."
+msgstr ""
+
+msgid "LinkedIn test posted."
+msgstr ""
+
+msgid "Open the post"
+msgstr ""
+
+msgid "Automatic sharing is switched off, so nothing was retried. Turn it on above and try again."
+msgstr ""
+
+#, php-format
+msgid "%d post still could not be shared. See the log below."
+msgid_plural "%d posts still could not be shared. See the log below."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Everything went out this time."
+msgstr ""
+
+msgid "The test ran with your latest post. See the result in the log below."
+msgstr ""
+
+msgid "Automatically shares every new post to Bluesky and Mastodon. LinkedIn is available as an optional extra."
+msgstr ""
+
+msgid "Automatic sharing"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Runs only when a post is published for the first time. Editing an existing post never shares it again."
+msgstr ""
+
+msgid "Handle"
+msgstr ""
+
+msgid "App password"
+msgstr ""
+
+msgid "Bluesky: Settings, Privacy and security, App passwords. Do not use your account password."
+msgstr ""
+
+msgid "Instance"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Without the @ sign. Only used to link to your profile on older posts."
+msgstr ""
+
+msgid "Access token"
+msgstr ""
+
+#, php-format
+msgid "Mastodon: Preferences, Development, New application. Required scope: %s."
+msgstr ""
+
+msgid "LinkedIn (optional)"
+msgstr ""
+
+msgid "Share to LinkedIn"
+msgstr ""
+
+msgid "Optional. LinkedIn does not hand out shared API access, so you have to create your own LinkedIn app and generate a token for it. Bluesky and Mastodon work without any of this."
+msgstr ""
+
+#, php-format
+msgid "Generate it with the LinkedIn OAuth token generator, not the Client Secret. Required scopes: %s."
+msgstr ""
+
+msgid "LinkedIn tokens expire after about 60 days and have to be generated again."
+msgstr ""
+
+#, php-format
+msgid "The stored token was saved %d day ago."
+msgid_plural "The stored token was saved %d days ago."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Author URN"
+msgstr ""
+
+msgid "Leave it empty. The plugin looks it up and fills it in on the first share."
+msgstr ""
+
+msgid "API version"
+msgstr ""
+
+msgid "YYYYMM format. LinkedIn supports each version for about a year, then this has to be bumped."
+msgstr ""
+
+msgid "IndieWeb and comments"
+msgstr ""
+
+msgid "Syndication box"
+msgstr ""
+
+msgid "Show it under each post"
+msgstr ""
+
+#, php-format
+msgid "Lists where the post also appeared and invites readers to reply there. The links carry the %s microformat. If you also run a webmention receiver and Brid.gy, that is what lets replies find their way back. This plugin does not receive webmentions itself."
+msgstr ""
+
+msgid "Local commenting"
+msgstr ""
+
+msgid "Turn it off, so people comment on social instead"
+msgstr ""
+
+msgid "This only hides the visitor comment form. It does not touch webmentions, so if you use a webmention plugin, replies collected by Brid.gy still show up under the post."
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Two-letter code sent along with the post, so timelines and translation prompts get it right. Leave it empty to follow the site language."
+msgstr ""
+
+msgid "Template"
+msgstr ""
+
+#, php-format
+msgid "Available tags: %s."
+msgstr ""
+
+msgid "Limits are 300 characters on Bluesky, 500 on Mastodon and 2800 on LinkedIn. The excerpt is shortened automatically; the title and the link are always kept."
+msgstr ""
+
+msgid "Save settings"
+msgstr ""
+
+msgid "Check the LinkedIn connection"
+msgstr ""
+
+msgid "Checks whether the token works and stores your author URN. It does not post anything. Worth doing before you run a real share."
+msgstr ""
+
+msgid "Test LinkedIn only"
+msgstr ""
+
+msgid "Shares your latest published post to LinkedIn only. Bluesky and Mastodon are left alone, so there is just one post to delete afterwards."
+msgstr ""
+
+msgid "This creates a real LinkedIn post. Continue?"
+msgstr ""
+
+msgid "Post a test to LinkedIn"
+msgstr ""
+
+msgid "Test everything"
+msgstr ""
+
+msgid "Shares your latest published post to every enabled platform. These are real posts, so they will be visible."
+msgstr ""
+
+msgid "This creates real posts on every enabled platform. Continue?"
+msgstr ""
+
+msgid "Share a test now"
+msgstr ""
+
+msgid "Failed shares"
+msgstr ""
+
+msgid "These posts did not go out after three attempts. Retrying only touches the platforms that are still missing."
+msgstr ""
+
+msgid "Retry now"
+msgstr ""
+
+msgid "Log"
+msgstr ""
+
+msgid "Nothing here yet."
+msgstr ""
+
+msgid "When"
+msgstr ""
+
+msgid "What happened"
+msgstr ""
