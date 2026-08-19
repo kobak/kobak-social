@@ -156,7 +156,9 @@ class Kobak_Social_Bluesky implements Kobak_Social_Platform {
 		}
 		$code = wp_remote_retrieve_response_code( $res );
 		if ( $code < 200 || $code >= 300 ) {
-			return new WP_Error( 'kobak_social_bsky_post', sprintf( /* translators: 1: HTTP status code, 2: error response from the Bluesky API. */ __( 'Bluesky error (HTTP %1$d): %2$s', 'kobak-social' ), (int) $code, wp_remote_retrieve_body( $res ) ) );
+			// A data-ban visszaadott státusz alapján dönti el az újrapróbálkozás logikája,
+			// hogy végleges-e a hiba — az üzenet szövege emiatt nem változik.
+			return new WP_Error( 'kobak_social_bsky_post', sprintf( /* translators: 1: HTTP status code, 2: error response from the Bluesky API. */ __( 'Bluesky error (HTTP %1$d): %2$s', 'kobak-social' ), (int) $code, wp_remote_retrieve_body( $res ) ), array( 'status' => (int) $code ) );
 		}
 
 		// Szindikációs link eltárolása (Bridgy ebből találja meg a válaszokat).

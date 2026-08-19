@@ -149,36 +149,57 @@ function kobak_social_has_platform_meta( $post_id ) {
 }
 
 /**
- * A megosztás. Platformonként külön jelölést tesz a bejegyzésre, így egy
- * elszállt Mastodon-poszt később újrapróbálható anélkül, hogy a sikeres
- * Bluesky-poszt még egyszer kimenne.
+ * A megosztás, a hibák részletével együtt. Platformonként külön jelölést
+ * tesz a bejegyzésre, így egy elszállt Mastodon-poszt később újrapróbálható
+ * anélkül, hogy a sikeres Bluesky-poszt még egyszer kimenne.
  *
- * @return array A sikertelen platformok azonosítói.
+ * A kobak_social_share_post() ennek vékony csomagolása — a visszatérési
+ * értékét egy téma is hívhatja, ezért annak alakja nem változhat. Ahol a
+ * WP_Error is kell (pl. az újrapróbálkozás dönti el belőle, hogy végleges-e
+ * a hiba), ezt a függvényt kell hívni.
+ *
+ * @return array {
+ *     @type array $failed A sikertelen platformok azonosítói.
+ *     @type array $errors A sikertelen platformok WP_Error objektumai, platform azonosító szerint kulcsolva.
+ * }
  */
-function kobak_social_share_post( $post_id, $force = false ) {
+function kobak_social_share_post_detailed( $post_id, $force = false ) {
 	$post = get_post( $post_id );
 	if ( ! $post ) {
-		return array();
+		return array(
+			'failed' => array(),
+			'errors' => array(),
+		);
 	}
 
 	$s = kobak_social_get_settings();
 
 	if ( ! $force ) {
 		if ( empty( $s['enabled'] ) ) {
-			return array();
+			return array(
+				'failed' => array(),
+				'errors' => array(),
+			);
 		}
 		if ( ! in_array( $post->post_type, (array) $s['post_types'], true ) ) {
-			return array();
+			return array(
+				'failed' => array(),
+				'errors' => array(),
+			);
 		}
 		// 1.4 előtt egyetlen közös jelölés volt. Ha az megvan, de platformonkénti
 		// még nincs, akkor ez a bejegyzés a régi logika szerint már kiment.
 		if ( get_post_meta( $post_id, KOBAK_SOCIAL_DONE_META, true ) && ! kobak_social_has_platform_meta( $post_id ) ) {
-			return array();
+			return array(
+				'failed' => array(),
+				'errors' => array(),
+			);
 		}
 	}
 
 	$results = array();
 	$failed  = array();
+	$errors  = array();
 
 	foreach ( kobak_social_active_platforms( $s ) as $platform ) {
 		$done_key = kobak_social_done_meta_key( $platform );
@@ -190,8 +211,9 @@ function kobak_social_share_post( $post_id, $force = false ) {
 		$label  = kobak_social_platform_label( $platform );
 
 		if ( is_wp_error( $result ) ) {
-			$failed[]  = $platform;
-			$results[] = $label . ': ERROR - ' . $result->get_error_message();
+			$failed[]            = $platform;
+			$errors[ $platform ] = $result;
+			$results[]           = $label . ': ERROR - ' . $result->get_error_message();
 		} else {
 			update_post_meta( $post_id, $done_key, current_time( 'mysql' ) );
 			$results[] = $label . ': OK';
@@ -199,7 +221,10 @@ function kobak_social_share_post( $post_id, $force = false ) {
 	}
 
 	if ( ! $results ) {
-		return array();
+		return array(
+			'failed' => array(),
+			'errors' => array(),
+		);
 	}
 
 	// A közös jelölés is megmarad: erről ismeri fel a régebbi verzióval
@@ -210,7 +235,22 @@ function kobak_social_share_post( $post_id, $force = false ) {
 
 	kobak_social_log( sprintf( '#%d "%s" -> %s', $post_id, get_the_title( $post ), implode( ' | ', $results ) ) );
 
-	return $failed;
+	return array(
+		'failed' => $failed,
+		'errors' => $errors,
+	);
+}
+
+/**
+ * A megosztás. Platformonként külön jelölést tesz a bejegyzésre, így egy
+ * elszállt Mastodon-poszt később újrapróbálható anélkül, hogy a sikeres
+ * Bluesky-poszt még egyszer kimenne.
+ *
+ * @return array A sikertelen platformok azonosítói.
+ */
+function kobak_social_share_post( $post_id, $force = false ) {
+	$detail = kobak_social_share_post_detailed( $post_id, $force );
+	return $detail['failed'];
 }
 
 /* -------------------------------------------------------------------------
@@ -230,6 +270,18 @@ function kobak_social_record_failure( $post_id, $platforms ) {
 	update_option( KOBAK_SOCIAL_FAILURES, $failures, false );
 }
 
+/**
+ * A bejegyzéshez már rögzített sikertelen platformok. Ahhoz kell, hogy egy
+ * végleges hibáról ne szóljunk többször ugyanarra a bejegyzésre.
+ */
+function kobak_social_recorded_failures( $post_id ) {
+	$failures = get_option( KOBAK_SOCIAL_FAILURES, array() );
+	if ( ! is_array( $failures ) || empty( $failures[ (int) $post_id ]['platforms'] ) ) {
+		return array();
+	}
+	return array_values( (array) $failures[ (int) $post_id ]['platforms'] );
+}
+
 function kobak_social_clear_failure( $post_id ) {
 	$failures = get_option( KOBAK_SOCIAL_FAILURES, array() );
 	if ( ! is_array( $failures ) || ! isset( $failures[ (int) $post_id ] ) ) {
@@ -240,28 +292,126 @@ function kobak_social_clear_failure( $post_id ) {
 }
 
 /**
- * Az ütemezett megosztás. Ha valamelyik platform elszállt (leggyakrabban
- * időtúllépés miatt), növekvő szünettel újrapróbálja. A sikeres platformok
- * a jelölésük miatt kimaradnak, tehát nem lesz dupla poszt.
+ * Eldönti egy megosztási hibáról, hogy végleges-e — tehát olyan, amit az
+ * újrapróbálkozás nem tud orvosolni (hiányzó hitelesítő adat, lejárt token,
+ * hiányzó jogosultság), szemben az átmenetivel (időtúllépés, hálózati hiba,
+ * túlterhelt szerver), ami idővel magától is helyrejöhet.
+ *
+ * @param WP_Error $error
+ * @return bool
+ */
+function kobak_social_is_permanent_failure( $error ) {
+	if ( ! is_wp_error( $error ) ) {
+		return false;
+	}
+
+	$code = $error->get_error_code();
+
+	// Ezek soha nem hálózati hibák, hanem hiányzó vagy hibás beállítások —
+	// várakozással nem gyógyulnak, tehát azonnal feladjuk, nem próbáljuk újra.
+	$always_permanent = array(
+		'kobak_social_bsky_missing',
+		'kobak_social_mastodon_missing',
+		'kobak_social_li_missing',
+		'kobak_social_li_no_token',
+		'kobak_social_li_notoken',
+		'kobak_social_li_off',
+		'kobak_social_bsky_auth',
+		'kobak_social_li_401',
+		'kobak_social_li_403',
+		'kobak_social_unknown_platform',
+	);
+	if ( in_array( $code, $always_permanent, true ) ) {
+		return true;
+	}
+
+	// Ezeknél a HTTP státuszkód dönt: a data argumentumban utazik (lásd az
+	// egyes platformoknál), nem a szövegből fejtjük vissza. 4xx a 408
+	// (timeout) és a 429 (rate limit) kivételével véglegesnek számít — egy
+	// 401/403/400 újrapróbálkozással nem lesz jobb.
+	$status_based = array(
+		'kobak_social_bsky_post',
+		'kobak_social_mastodon_post',
+		'kobak_social_li_post',
+		'kobak_social_li_upload',
+		'kobak_social_li_userinfo',
+		'kobak_social_li_check',
+	);
+	if ( in_array( $code, $status_based, true ) ) {
+		$data   = $error->get_error_data();
+		$status = ( is_array( $data ) && isset( $data['status'] ) ) ? (int) $data['status'] : 0;
+		if ( $status >= 400 && $status < 500 && 408 !== $status && 429 !== $status ) {
+			return true;
+		}
+	}
+
+	// Minden más (a wp_remote_post()/wp_remote_get() saját WP_Error-ja hálózati
+	// hiba esetén, illetve az 5xx/408/429 státuszok) átmenetinek számít.
+	return false;
+}
+
+/**
+ * Az ütemezett megosztás. Ha valamelyik platform elszállt, a hiba fajtája
+ * dönti el a folytatást: az átmeneti hibák (leggyakrabban időtúllépés)
+ * növekvő szünettel újrapróbálhatók, a végleges hibák (pl. hiányzó
+ * hitelesítő adat) viszont azonnal a hibalistába kerülnek — ott várakozás
+ * semmit nem javítana, csak feleslegesen tartaná a bejegyzést a
+ * háttérfolyamatban. A sikeres platformok a jelölésük miatt kimaradnak,
+ * tehát nem lesz dupla poszt.
  */
 function kobak_social_run_scheduled_share( $post_id, $attempt = 1 ) {
 	$attempt = max( 1, (int) $attempt );
-	$failed  = kobak_social_share_post( $post_id );
+	$detail  = kobak_social_share_post_detailed( $post_id );
+	$failed  = $detail['failed'];
+	$errors  = $detail['errors'];
 
 	if ( empty( $failed ) ) {
 		kobak_social_clear_failure( $post_id );
 		return;
 	}
 
-	if ( $attempt < KOBAK_SOCIAL_MAX_ATTEMPTS ) {
-		$delay = 300 * $attempt;
-		wp_schedule_single_event( time() + $delay, 'kobak_social_delayed_share', array( $post_id, $attempt + 1 ) );
-		kobak_social_log( sprintf( '#%d retry %d/%d in %d minutes', $post_id, $attempt + 1, KOBAK_SOCIAL_MAX_ATTEMPTS, (int) ( $delay / 60 ) ) );
-		return;
+	$permanent = array();
+	$transient = array();
+	foreach ( $failed as $platform ) {
+		$error = isset( $errors[ $platform ] ) ? $errors[ $platform ] : null;
+		if ( $error && kobak_social_is_permanent_failure( $error ) ) {
+			$permanent[] = $platform;
+		} else {
+			$transient[] = $platform;
+		}
 	}
 
-	kobak_social_record_failure( $post_id, $failed );
-	kobak_social_log( sprintf( '#%d gave up after %d attempts: %s', $post_id, KOBAK_SOCIAL_MAX_ATTEMPTS, implode( ', ', $failed ) ) );
+	// A végleges hibájú platformokat azonnal a hibalistába írjuk — ezekre
+	// várni fölösleges, a felhasználónak a beállításon kell javítania.
+	if ( $permanent ) {
+		// Egy átmeneti hibájú társ miatt ez a függvény még kétszer lefuthat.
+		// A véglegesről viszont egyszer kell szólni, nem minden körben.
+		$mar_rogzitett = kobak_social_recorded_failures( $post_id );
+		$ujak          = array_values( array_diff( $permanent, $mar_rogzitett ) );
+
+		kobak_social_record_failure( $post_id, array_values( array_unique( array_merge( $mar_rogzitett, $permanent ) ) ) );
+
+		if ( $ujak ) {
+			kobak_social_log( sprintf( '#%d gave up immediately, permanent failure: %s', $post_id, implode( ', ', $ujak ) ) );
+		}
+	}
+
+	// Az átmeneti hibájú platformokra a megszokott módon, növekvő szünettel
+	// újrapróbálkozunk — a végleges hiba nem tarthatja fogva ezt a folyamatot.
+	if ( $transient ) {
+		if ( $attempt < KOBAK_SOCIAL_MAX_ATTEMPTS ) {
+			$delay = 300 * $attempt;
+			wp_schedule_single_event( time() + $delay, 'kobak_social_delayed_share', array( $post_id, $attempt + 1 ) );
+			kobak_social_log( sprintf( '#%d retry %d/%d in %d minutes', $post_id, $attempt + 1, KOBAK_SOCIAL_MAX_ATTEMPTS, (int) ( $delay / 60 ) ) );
+			return;
+		}
+
+		// A véglegesen elszállt platformok rekordját itt egészítjük ki az
+		// átmenetiekkel is, mert kobak_social_record_failure() a teljes
+		// bejegyzésnyi listát cseréli le, nem egészíti ki azt.
+		kobak_social_record_failure( $post_id, array_merge( $permanent, $transient ) );
+		kobak_social_log( sprintf( '#%d gave up after %d attempts: %s', $post_id, KOBAK_SOCIAL_MAX_ATTEMPTS, implode( ', ', $transient ) ) );
+	}
 }
 
 /**

@@ -1,101 +1,22 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: kobak social 1.4.0\n"
-"Report-Msgid-Bugs-To: https://kobak.org/plugins/\n"
+"Project-Id-Version: kobak social 2.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-19 16:03+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Domain: kobak-social\n"
-
-msgid "Bluesky credentials are missing."
-msgstr ""
-
-#, php-format
-msgid "Bluesky login failed: %s"
-msgstr ""
-
-#, php-format
-msgid "Bluesky error (HTTP %1$d): %2$s"
-msgstr ""
-
-msgid "Mastodon credentials are missing."
-msgstr ""
-
-#, php-format
-msgid "Mastodon error (HTTP %1$d): %2$s"
-msgstr ""
-
-msgid "No LinkedIn access token."
-msgstr ""
-
-#, php-format
-msgid "LinkedIn userinfo error (HTTP %1$d): %2$s"
-msgstr ""
-
-msgid "No featured image."
-msgstr ""
-
-msgid "The featured image file could not be found."
-msgstr ""
-
-#, php-format
-msgid "Could not initialise the image upload: %s"
-msgstr ""
-
-msgid "The image could not be read."
-msgstr ""
-
-#, php-format
-msgid "Image upload failed (HTTP %d)."
-msgstr ""
-
-msgid "LinkedIn is disabled."
-msgstr ""
-
-msgid "The LinkedIn access token is missing."
-msgstr ""
-
-#, php-format
-msgid "LinkedIn error (HTTP %1$d): %2$s"
-msgstr ""
-
-msgid "No access token has been entered."
-msgstr ""
-
-#, php-format
-msgid "The value entered is only %d characters long. A LinkedIn access token is much longer, usually 300-500 characters. You have probably pasted the Client ID or the Client Secret instead of the token."
-msgstr ""
-
-msgid "The token is invalid or has expired (401). Generate a new one in your LinkedIn app."
-msgstr ""
-
-msgid "The token works but a permission is missing (403). You need the openid, profile and w_member_social scopes."
-msgstr ""
-
-#, php-format
-msgid "Unexpected response (HTTP %1$d): %2$s"
-msgstr ""
-
-msgid "unknown name"
-msgstr ""
-
-msgid "Let&#8217;s talk about it:"
-msgstr ""
-
-msgid "This post is also published here:"
-msgstr ""
-
-msgid "Join the conversation"
-msgstr ""
-
-msgid "Replies, likes and reposts over there show up under this post as well."
-msgstr ""
-
-msgid "Commenting is turned off on this site. Reply on Bluesky or Mastodon instead: answers there also appear underneath this post."
-msgstr ""
-
-msgid "Commenting is disabled"
-msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Saved - leave empty to keep it"
 msgstr ""
@@ -164,63 +85,10 @@ msgstr ""
 msgid "Runs only when a post is published for the first time. Editing an existing post never shares it again."
 msgstr ""
 
-msgid "Handle"
+msgid "Post types to share"
 msgstr ""
 
-msgid "App password"
-msgstr ""
-
-msgid "Bluesky: Settings, Privacy and security, App passwords. Do not use your account password."
-msgstr ""
-
-msgid "Instance"
-msgstr ""
-
-msgid "Username"
-msgstr ""
-
-msgid "Without the @ sign. Only used to link to your profile on older posts."
-msgstr ""
-
-msgid "Access token"
-msgstr ""
-
-#, php-format
-msgid "Mastodon: Preferences, Development, New application. Required scope: %s."
-msgstr ""
-
-msgid "LinkedIn (optional)"
-msgstr ""
-
-msgid "Share to LinkedIn"
-msgstr ""
-
-msgid "Optional. LinkedIn does not hand out shared API access, so you have to create your own LinkedIn app and generate a token for it. Bluesky and Mastodon work without any of this."
-msgstr ""
-
-#, php-format
-msgid "Generate it with the LinkedIn OAuth token generator, not the Client Secret. Required scopes: %s."
-msgstr ""
-
-msgid "LinkedIn tokens expire after about 60 days and have to be generated again."
-msgstr ""
-
-#, php-format
-msgid "The stored token was saved %d day ago."
-msgid_plural "The stored token was saved %d days ago."
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Author URN"
-msgstr ""
-
-msgid "Leave it empty. The plugin looks it up and fills it in on the first share."
-msgstr ""
-
-msgid "API version"
-msgstr ""
-
-msgid "YYYYMM format. LinkedIn supports each version for about a year, then this has to be bumped."
+msgid "Nothing is selected, so automatic sharing has nothing to share even while it is switched on above."
 msgstr ""
 
 msgid "IndieWeb and comments"
@@ -300,7 +168,7 @@ msgstr ""
 msgid "Failed shares"
 msgstr ""
 
-msgid "These posts did not go out after three attempts. Retrying only touches the platforms that are still missing."
+msgid "These posts did not go out. A timeout or an outage is retried three times before it lands here; a missing or invalid credential lands here at once, because waiting cannot fix it. The log below says which happened. Retrying only touches the platforms that are still missing."
 msgstr ""
 
 msgid "Retry now"
@@ -316,4 +184,153 @@ msgid "When"
 msgstr ""
 
 msgid "What happened"
+msgstr ""
+
+msgid "Let&#8217;s talk about it:"
+msgstr ""
+
+msgid "This post is also published here:"
+msgstr ""
+
+msgid "Join the conversation"
+msgstr ""
+
+msgid "Replies, likes and reposts over there show up under this post as well."
+msgstr ""
+
+msgid "Commenting is turned off on this site. Reply on Bluesky or Mastodon instead: answers there also appear underneath this post."
+msgstr ""
+
+msgid "Commenting is disabled"
+msgstr ""
+
+msgid "Handle"
+msgstr ""
+
+msgid "App password"
+msgstr ""
+
+msgid "Bluesky: Settings, Privacy and security, App passwords. Do not use your account password."
+msgstr ""
+
+msgid "Bluesky credentials are missing."
+msgstr ""
+
+#, php-format
+msgid "Bluesky login failed: %s"
+msgstr ""
+
+#, php-format
+msgid "Bluesky error (HTTP %1$d): %2$s"
+msgstr ""
+
+msgid "LinkedIn (optional)"
+msgstr ""
+
+msgid "Share to LinkedIn"
+msgstr ""
+
+msgid "Optional. LinkedIn does not hand out shared API access, so you have to create your own LinkedIn app and generate a token for it. Bluesky and Mastodon work without any of this."
+msgstr ""
+
+msgid "Access token"
+msgstr ""
+
+#, php-format
+msgid "Generate it with the LinkedIn OAuth token generator, not the Client Secret. Required scopes: %s."
+msgstr ""
+
+msgid "LinkedIn tokens expire after about 60 days and have to be generated again."
+msgstr ""
+
+#, php-format
+msgid "The stored token was saved %d day ago."
+msgid_plural "The stored token was saved %d days ago."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Author URN"
+msgstr ""
+
+msgid "Leave it empty. The plugin looks it up and fills it in on the first share."
+msgstr ""
+
+msgid "API version"
+msgstr ""
+
+msgid "YYYYMM format. LinkedIn supports each version for about a year, then this has to be bumped."
+msgstr ""
+
+msgid "No LinkedIn access token."
+msgstr ""
+
+#, php-format
+msgid "LinkedIn userinfo error (HTTP %1$d): %2$s"
+msgstr ""
+
+msgid "No featured image."
+msgstr ""
+
+msgid "The featured image file could not be found."
+msgstr ""
+
+#, php-format
+msgid "Could not initialise the image upload: %s"
+msgstr ""
+
+msgid "The image could not be read."
+msgstr ""
+
+#, php-format
+msgid "Image upload failed (HTTP %d)."
+msgstr ""
+
+msgid "LinkedIn is disabled."
+msgstr ""
+
+msgid "The LinkedIn access token is missing."
+msgstr ""
+
+#, php-format
+msgid "LinkedIn error (HTTP %1$d): %2$s"
+msgstr ""
+
+msgid "No access token has been entered."
+msgstr ""
+
+#, php-format
+msgid "The value entered is only %d characters long. A LinkedIn access token is much longer, usually 300-500 characters. You have probably pasted the Client ID or the Client Secret instead of the token."
+msgstr ""
+
+msgid "The token is invalid or has expired (401). Generate a new one in your LinkedIn app."
+msgstr ""
+
+msgid "The token works but a permission is missing (403). You need the openid, profile and w_member_social scopes."
+msgstr ""
+
+#, php-format
+msgid "Unexpected response (HTTP %1$d): %2$s"
+msgstr ""
+
+msgid "unknown name"
+msgstr ""
+
+msgid "Instance"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Without the @ sign. Only used to link to your profile on older posts."
+msgstr ""
+
+#, php-format
+msgid "Mastodon: Preferences, Development, New application. Required scope: %s."
+msgstr ""
+
+msgid "Mastodon credentials are missing."
+msgstr ""
+
+#, php-format
+msgid "Mastodon error (HTTP %1$d): %2$s"
 msgstr ""

@@ -166,7 +166,9 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 		$code = wp_remote_retrieve_response_code( $res );
 		$body = json_decode( wp_remote_retrieve_body( $res ), true );
 		if ( $code < 200 || $code >= 300 || empty( $body['sub'] ) ) {
-			return new WP_Error( 'kobak_social_li_userinfo', sprintf( /* translators: 1: HTTP status code, 2: error response from the LinkedIn API. */ __( 'LinkedIn userinfo error (HTTP %1$d): %2$s', 'kobak-social' ), (int) $code, wp_remote_retrieve_body( $res ) ) );
+			// A data-ban visszaadott státusz alapján dönti el az újrapróbálkozás logikája,
+			// hogy végleges-e a hiba — az üzenet szövege emiatt nem változik.
+			return new WP_Error( 'kobak_social_li_userinfo', sprintf( /* translators: 1: HTTP status code, 2: error response from the LinkedIn API. */ __( 'LinkedIn userinfo error (HTTP %1$d): %2$s', 'kobak-social' ), (int) $code, wp_remote_retrieve_body( $res ) ), array( 'status' => (int) $code ) );
 		}
 
 		$urn      = 'urn:li:person:' . $body['sub'];
@@ -254,7 +256,9 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 		}
 		$put_code = wp_remote_retrieve_response_code( $put );
 		if ( $put_code < 200 || $put_code >= 300 ) {
-			return new WP_Error( 'kobak_social_li_upload', sprintf( /* translators: %d: HTTP status code. */ __( 'Image upload failed (HTTP %d).', 'kobak-social' ), (int) $put_code ) );
+			// A data-ban visszaadott státusz alapján dönti el az újrapróbálkozás logikája,
+			// hogy végleges-e a hiba — az üzenet szövege emiatt nem változik.
+			return new WP_Error( 'kobak_social_li_upload', sprintf( /* translators: %d: HTTP status code. */ __( 'Image upload failed (HTTP %d).', 'kobak-social' ), (int) $put_code ), array( 'status' => (int) $put_code ) );
 		}
 
 		return $init_body['value']['image'];
@@ -329,7 +333,9 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 
 		$code = wp_remote_retrieve_response_code( $res );
 		if ( $code < 200 || $code >= 300 ) {
-			return new WP_Error( 'kobak_social_li_post', sprintf( /* translators: 1: HTTP status code, 2: error response from the LinkedIn API. */ __( 'LinkedIn error (HTTP %1$d): %2$s', 'kobak-social' ), (int) $code, wp_remote_retrieve_body( $res ) ) );
+			// A data-ban visszaadott státusz alapján dönti el az újrapróbálkozás logikája,
+			// hogy végleges-e a hiba — az üzenet szövege emiatt nem változik.
+			return new WP_Error( 'kobak_social_li_post', sprintf( /* translators: 1: HTTP status code, 2: error response from the LinkedIn API. */ __( 'LinkedIn error (HTTP %1$d): %2$s', 'kobak-social' ), (int) $code, wp_remote_retrieve_body( $res ) ), array( 'status' => (int) $code ) );
 		}
 
 		$urn = wp_remote_retrieve_header( $res, 'x-restli-id' );
@@ -380,7 +386,9 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 			return new WP_Error( 'kobak_social_li_403', __( 'The token works but a permission is missing (403). You need the openid, profile and w_member_social scopes.', 'kobak-social' ) );
 		}
 		if ( $code < 200 || $code >= 300 || empty( $body['sub'] ) ) {
-			return new WP_Error( 'kobak_social_li_check', sprintf( /* translators: 1: HTTP status code, 2: error response from the LinkedIn API. */ __( 'Unexpected response (HTTP %1$d): %2$s', 'kobak-social' ), (int) $code, wp_remote_retrieve_body( $res ) ) );
+			// A data-ban visszaadott státusz alapján dönti el az újrapróbálkozás logikája,
+			// hogy végleges-e a hiba — az üzenet szövege emiatt nem változik.
+			return new WP_Error( 'kobak_social_li_check', sprintf( /* translators: 1: HTTP status code, 2: error response from the LinkedIn API. */ __( 'Unexpected response (HTTP %1$d): %2$s', 'kobak-social' ), (int) $code, wp_remote_retrieve_body( $res ) ), array( 'status' => (int) $code ) );
 		}
 
 		$urn = 'urn:li:person:' . $body['sub'];

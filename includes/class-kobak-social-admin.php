@@ -110,11 +110,17 @@ function kobak_social_settings_page() {
 	if ( isset( $_POST['kobak_social_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['kobak_social_nonce'] ) ), 'kobak_social_save' ) ) {
 		$current = kobak_social_get_settings();
 
+		// Csak a ténylegesen létező, publikus (és nem attachment) post type-okat fogadjuk el —
+		// így egy manipulált POST sem tud érvénytelen értéket becsempészni. Az üres kijelölés
+		// szándékos lehet, azt nem helyettesítjük vissza 'post'-ra.
+		$kobak_valid_post_types = array_diff( array_keys( get_post_types( array( 'public' => true ), 'names' ) ), array( 'attachment' ) );
+		$kobak_posted_types     = isset( $_POST['post_types'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['post_types'] ) ) : array();
+
 		$new = array(
 			'enabled'                => isset( $_POST['enabled'] ) ? 1 : 0,
 			'post_language'          => strtolower( substr( preg_replace( '/[^A-Za-z]/', '', sanitize_text_field( wp_unslash( $_POST['post_language'] ?? '' ) ) ), 0, 2 ) ),
 			'template'               => sanitize_textarea_field( wp_unslash( $_POST['template'] ?? '' ) ),
-			'post_types'             => array( 'post' ),
+			'post_types'             => array_values( array_intersect( $kobak_posted_types, $kobak_valid_post_types ) ),
 			'show_syndication'       => isset( $_POST['show_syndication'] ) ? 1 : 0,
 			'disable_local_comments' => isset( $_POST['disable_local_comments'] ) ? 1 : 0,
 		);
@@ -227,6 +233,28 @@ function kobak_social_settings_page() {
 						<p class="description"><?php esc_html_e( 'Runs only when a post is published for the first time. Editing an existing post never shares it again.', 'kobak-social' ); ?></p>
 					</td>
 				</tr>
+				<tr>
+					<th scope="row"><?php esc_html_e( 'Post types to share', 'kobak-social' ); ?></th>
+					<td>
+						<?php
+						// Az attachment kimarad: egy médiaelem megosztása nem értelmezhető, csak zavart okozna.
+						$kobak_saved_types = (array) $s['post_types'];
+						$kobak_post_types  = get_post_types( array( 'public' => true ), 'objects' );
+						unset( $kobak_post_types['attachment'] );
+						foreach ( $kobak_post_types as $kobak_post_type ) :
+							?>
+							<label style="display:inline-block;margin-right:1em">
+								<input type="checkbox" name="post_types[]" value="<?php echo esc_attr( $kobak_post_type->name ); ?>" <?php checked( in_array( $kobak_post_type->name, $kobak_saved_types, true ) ); ?>>
+								<?php echo esc_html( $kobak_post_type->label ); ?>
+							</label>
+							<?php
+						endforeach;
+						?>
+						<?php if ( empty( $kobak_saved_types ) ) : ?>
+							<p class="description"><?php esc_html_e( 'Nothing is selected, so automatic sharing has nothing to share even while it is switched on above.', 'kobak-social' ); ?></p>
+						<?php endif; ?>
+					</td>
+				</tr>
 
 				<?php
 				// Minden regisztrált platform maga rajzolja ki a saját szakaszát —
@@ -318,7 +346,7 @@ function kobak_social_settings_page() {
 			?>
 		<hr>
 		<h2><?php esc_html_e( 'Failed shares', 'kobak-social' ); ?></h2>
-		<p><?php esc_html_e( 'These posts did not go out after three attempts. Retrying only touches the platforms that are still missing.', 'kobak-social' ); ?></p>
+		<p><?php esc_html_e( 'These posts did not go out. A timeout or an outage is retried three times before it lands here; a missing or invalid credential lands here at once, because waiting cannot fix it. The log below says which happened. Retrying only touches the platforms that are still missing.', 'kobak-social' ); ?></p>
 		<ul style="list-style:disc;margin-left:1.5em">
 			<?php foreach ( $failures as $failed_id => $row ) : ?>
 				<?php

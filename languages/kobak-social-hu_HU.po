@@ -1,103 +1,14 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: kobak social 1.4.0\n"
-"Report-Msgid-Bugs-To: https://kobak.org/plugins/\n"
+"Project-Id-Version: kobak social 2.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-19 16:03+0200\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: kobak-social\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid "Bluesky credentials are missing."
-msgstr "Hiányoznak a Bluesky adatok."
-
-#, php-format
-msgid "Bluesky login failed: %s"
-msgstr "A Bluesky belépés sikertelen: %s"
-
-#, php-format
-msgid "Bluesky error (HTTP %1$d): %2$s"
-msgstr "Bluesky hiba (HTTP %1$d): %2$s"
-
-msgid "Mastodon credentials are missing."
-msgstr "Hiányoznak a Mastodon adatok."
-
-#, php-format
-msgid "Mastodon error (HTTP %1$d): %2$s"
-msgstr "Mastodon hiba (HTTP %1$d): %2$s"
-
-msgid "No LinkedIn access token."
-msgstr "Nincs LinkedIn access token."
-
-#, php-format
-msgid "LinkedIn userinfo error (HTTP %1$d): %2$s"
-msgstr "LinkedIn userinfo hiba (HTTP %1$d): %2$s"
-
-msgid "No featured image."
-msgstr "Nincs kiemelt kép."
-
-msgid "The featured image file could not be found."
-msgstr "A kiemelt kép fájlja nem található."
-
-#, php-format
-msgid "Could not initialise the image upload: %s"
-msgstr "A képfeltöltés inicializálása sikertelen: %s"
-
-msgid "The image could not be read."
-msgstr "A kép nem olvasható."
-
-#, php-format
-msgid "Image upload failed (HTTP %d)."
-msgstr "Képfeltöltési hiba (HTTP %d)."
-
-msgid "LinkedIn is disabled."
-msgstr "A LinkedIn ki van kapcsolva."
-
-msgid "The LinkedIn access token is missing."
-msgstr "Hiányzik a LinkedIn access token."
-
-#, php-format
-msgid "LinkedIn error (HTTP %1$d): %2$s"
-msgstr "LinkedIn hiba (HTTP %1$d): %2$s"
-
-msgid "No access token has been entered."
-msgstr "Nincs beírva access token."
-
-#, php-format
-msgid "The value entered is only %d characters long. A LinkedIn access token is much longer, usually 300-500 characters. You have probably pasted the Client ID or the Client Secret instead of the token."
-msgstr "A beírt érték csak %d karakter. Egy LinkedIn access token ennél jóval hosszabb, jellemzően 300-500 karakter. Valószínűleg a Client ID vagy a Client Secret került ide a token helyett."
-
-msgid "The token is invalid or has expired (401). Generate a new one in your LinkedIn app."
-msgstr "A token érvénytelen vagy lejárt (401). Generálj újat a LinkedIn appban."
-
-msgid "The token works but a permission is missing (403). You need the openid, profile and w_member_social scopes."
-msgstr "A token él, de hiányzik egy jogosultság (403). Kell az openid, a profile és a w_member_social is."
-
-#, php-format
-msgid "Unexpected response (HTTP %1$d): %2$s"
-msgstr "Váratlan válasz (HTTP %1$d): %2$s"
-
-msgid "unknown name"
-msgstr "ismeretlen név"
-
-msgid "Let&#8217;s talk about it:"
-msgstr "Beszélgessünk róla:"
-
-msgid "This post is also published here:"
-msgstr "Ez a bejegyzés megjelent itt is:"
-
-msgid "Join the conversation"
-msgstr "Szólj hozzá!"
-
-msgid "Replies, likes and reposts over there show up under this post as well."
-msgstr "Ha ott hozzászólsz, lájkolsz vagy megosztod, az itt is megjelenik a bejegyzés alatt."
-
-msgid "Commenting is turned off on this site. Reply on Bluesky or Mastodon instead: answers there also appear underneath this post."
-msgstr "A hozzászólás ezen az oldalon ki van kapcsolva. Kommentelj Bluesky-on vagy Mastodonon, ott válaszolok, és a hozzászólásod a bejegyzés alatt is megjelenik."
-
-msgid "Commenting is disabled"
-msgstr "A hozzászólás kikapcsolva"
 
 msgid "Saved - leave empty to keep it"
 msgstr "Mentve – hagyd üresen, ha marad"
@@ -166,64 +77,11 @@ msgstr "Bekapcsolva"
 msgid "Runs only when a post is published for the first time. Editing an existing post never shares it again."
 msgstr "Csak új bejegyzés publikálásakor fut le. Meglévő poszt szerkesztése soha nem posztol újra."
 
-msgid "Handle"
-msgstr "Handle"
+msgid "Post types to share"
+msgstr "Megosztandó bejegyzéstípusok"
 
-msgid "App password"
-msgstr "App jelszó"
-
-msgid "Bluesky: Settings, Privacy and security, App passwords. Do not use your account password."
-msgstr "Bluesky: Settings, Privacy and security, App passwords. Ne a fiókod jelszavát add meg."
-
-msgid "Instance"
-msgstr "Instance"
-
-msgid "Username"
-msgstr "Felhasználónév"
-
-msgid "Without the @ sign. Only used to link to your profile on older posts."
-msgstr "Kukac nélkül. Csak arra kell, hogy a régebbi bejegyzéseknél a profilodra tudjunk linkelni."
-
-msgid "Access token"
-msgstr "Access token"
-
-#, php-format
-msgid "Mastodon: Preferences, Development, New application. Required scope: %s."
-msgstr "Mastodon: Preferences, Development, New application. Szükséges jogosultság: %s."
-
-msgid "LinkedIn (optional)"
-msgstr "LinkedIn (választható)"
-
-msgid "Share to LinkedIn"
-msgstr "Megosztás LinkedInre"
-
-msgid "Optional. LinkedIn does not hand out shared API access, so you have to create your own LinkedIn app and generate a token for it. Bluesky and Mastodon work without any of this."
-msgstr "Választható. A LinkedIn nem ad közös API-hozzáférést, ezért saját LinkedIn appot kell létrehoznod, és ahhoz tokent generálnod. A Bluesky és a Mastodon mindezek nélkül működik."
-
-#, php-format
-msgid "Generate it with the LinkedIn OAuth token generator, not the Client Secret. Required scopes: %s."
-msgstr "A LinkedIn OAuth token generátorával állítsd elő, nem a Client Secret kell ide. Szükséges jogosultságok: %s."
-
-msgid "LinkedIn tokens expire after about 60 days and have to be generated again."
-msgstr "A LinkedIn tokenek kb. 60 nap után lejárnak, akkor újat kell generálni."
-
-#, php-format
-msgid "The stored token was saved %d day ago."
-msgid_plural "The stored token was saved %d days ago."
-msgstr[0] "A mentett token %d napja került be."
-msgstr[1] "A mentett token %d napja került be."
-
-msgid "Author URN"
-msgstr "Szerző URN"
-
-msgid "Leave it empty. The plugin looks it up and fills it in on the first share."
-msgstr "Hagyd üresen. A plugin az első megosztásnál lekéri és beírja magától."
-
-msgid "API version"
-msgstr "API verzió"
-
-msgid "YYYYMM format. LinkedIn supports each version for about a year, then this has to be bumped."
-msgstr "ÉÉÉÉHH formátum. A LinkedIn nagyjából egy évig támogat egy verziót, utána itt kell átírni."
+msgid "Nothing is selected, so automatic sharing has nothing to share even while it is switched on above."
+msgstr "Egy típus sincs kijelölve, így az automatikus megosztásnak nincs mit kitennie, hiába van fent bekapcsolva."
 
 msgid "IndieWeb and comments"
 msgstr "IndieWeb és hozzászólások"
@@ -302,8 +160,8 @@ msgstr "Teszt megosztás most"
 msgid "Failed shares"
 msgstr "Sikertelen megosztások"
 
-msgid "These posts did not go out after three attempts. Retrying only touches the platforms that are still missing."
-msgstr "Ezek a bejegyzések három próbálkozás után sem mentek ki. Az újrapróbálás csak a hiányzó platformokra megy ki."
+msgid "These posts did not go out. A timeout or an outage is retried three times before it lands here; a missing or invalid credential lands here at once, because waiting cannot fix it. The log below says which happened. Retrying only touches the platforms that are still missing."
+msgstr "Ezek a bejegyzések nem mentek ki. Az időtúllépést és a kimaradást háromszor próbálja újra, mielőtt idekerülne; a hiányzó vagy hibás hitelesítő adat viszont azonnal itt köt ki, mert azon a várakozás nem segít. Az alábbi naplóból derül ki, melyik történt. Az újrapróbálás csak a még hiányzó platformokat érinti."
 
 msgid "Retry now"
 msgstr "Újrapróbálás most"
@@ -319,3 +177,155 @@ msgstr "Mikor"
 
 msgid "What happened"
 msgstr "Mi történt"
+
+msgid "Let&#8217;s talk about it:"
+msgstr "Beszélgessünk róla:"
+
+msgid "This post is also published here:"
+msgstr "Ez a bejegyzés megjelent itt is:"
+
+msgid "Join the conversation"
+msgstr "Szólj hozzá!"
+
+msgid "Replies, likes and reposts over there show up under this post as well."
+msgstr "Ha ott hozzászólsz, lájkolsz vagy megosztod, az itt is megjelenik a bejegyzés alatt."
+
+msgid "Commenting is turned off on this site. Reply on Bluesky or Mastodon instead: answers there also appear underneath this post."
+msgstr "A hozzászólás ezen az oldalon ki van kapcsolva. Kommentelj Bluesky-on vagy Mastodonon, ott válaszolok, és a hozzászólásod a bejegyzés alatt is megjelenik."
+
+msgid "Commenting is disabled"
+msgstr "A hozzászólás kikapcsolva"
+
+msgid "Handle"
+msgstr "Handle"
+
+msgid "App password"
+msgstr "App jelszó"
+
+msgid "Bluesky: Settings, Privacy and security, App passwords. Do not use your account password."
+msgstr "Bluesky: Settings, Privacy and security, App passwords. Ne a fiókod jelszavát add meg."
+
+msgid "Bluesky credentials are missing."
+msgstr "Hiányoznak a Bluesky adatok."
+
+#, php-format
+msgid "Bluesky login failed: %s"
+msgstr "A Bluesky belépés sikertelen: %s"
+
+#, php-format
+msgid "Bluesky error (HTTP %1$d): %2$s"
+msgstr "Bluesky hiba (HTTP %1$d): %2$s"
+
+msgid "LinkedIn (optional)"
+msgstr "LinkedIn (választható)"
+
+msgid "Share to LinkedIn"
+msgstr "Megosztás LinkedInre"
+
+msgid "Optional. LinkedIn does not hand out shared API access, so you have to create your own LinkedIn app and generate a token for it. Bluesky and Mastodon work without any of this."
+msgstr "Választható. A LinkedIn nem ad közös API-hozzáférést, ezért saját LinkedIn appot kell létrehoznod, és ahhoz tokent generálnod. A Bluesky és a Mastodon mindezek nélkül működik."
+
+msgid "Access token"
+msgstr "Access token"
+
+#, php-format
+msgid "Generate it with the LinkedIn OAuth token generator, not the Client Secret. Required scopes: %s."
+msgstr "A LinkedIn OAuth token generátorával állítsd elő, nem a Client Secret kell ide. Szükséges jogosultságok: %s."
+
+msgid "LinkedIn tokens expire after about 60 days and have to be generated again."
+msgstr "A LinkedIn tokenek kb. 60 nap után lejárnak, akkor újat kell generálni."
+
+#, php-format
+msgid "The stored token was saved %d day ago."
+msgid_plural "The stored token was saved %d days ago."
+msgstr[0] "A mentett token %d napja került be."
+msgstr[1] "A mentett token %d napja került be."
+
+msgid "Author URN"
+msgstr "Szerző URN"
+
+msgid "Leave it empty. The plugin looks it up and fills it in on the first share."
+msgstr "Hagyd üresen. A plugin az első megosztásnál lekéri és beírja magától."
+
+msgid "API version"
+msgstr "API verzió"
+
+msgid "YYYYMM format. LinkedIn supports each version for about a year, then this has to be bumped."
+msgstr "ÉÉÉÉHH formátum. A LinkedIn nagyjából egy évig támogat egy verziót, utána itt kell átírni."
+
+msgid "No LinkedIn access token."
+msgstr "Nincs LinkedIn access token."
+
+#, php-format
+msgid "LinkedIn userinfo error (HTTP %1$d): %2$s"
+msgstr "LinkedIn userinfo hiba (HTTP %1$d): %2$s"
+
+msgid "No featured image."
+msgstr "Nincs kiemelt kép."
+
+msgid "The featured image file could not be found."
+msgstr "A kiemelt kép fájlja nem található."
+
+#, php-format
+msgid "Could not initialise the image upload: %s"
+msgstr "A képfeltöltés inicializálása sikertelen: %s"
+
+msgid "The image could not be read."
+msgstr "A kép nem olvasható."
+
+#, php-format
+msgid "Image upload failed (HTTP %d)."
+msgstr "Képfeltöltési hiba (HTTP %d)."
+
+msgid "LinkedIn is disabled."
+msgstr "A LinkedIn ki van kapcsolva."
+
+msgid "The LinkedIn access token is missing."
+msgstr "Hiányzik a LinkedIn access token."
+
+#, php-format
+msgid "LinkedIn error (HTTP %1$d): %2$s"
+msgstr "LinkedIn hiba (HTTP %1$d): %2$s"
+
+msgid "No access token has been entered."
+msgstr "Nincs beírva access token."
+
+#, php-format
+msgid "The value entered is only %d characters long. A LinkedIn access token is much longer, usually 300-500 characters. You have probably pasted the Client ID or the Client Secret instead of the token."
+msgstr "A beírt érték csak %d karakter. Egy LinkedIn access token ennél jóval hosszabb, jellemzően 300-500 karakter. Valószínűleg a Client ID vagy a Client Secret került ide a token helyett."
+
+msgid "The token is invalid or has expired (401). Generate a new one in your LinkedIn app."
+msgstr "A token érvénytelen vagy lejárt (401). Generálj újat a LinkedIn appban."
+
+msgid "The token works but a permission is missing (403). You need the openid, profile and w_member_social scopes."
+msgstr "A token él, de hiányzik egy jogosultság (403). Kell az openid, a profile és a w_member_social is."
+
+#, php-format
+msgid "Unexpected response (HTTP %1$d): %2$s"
+msgstr "Váratlan válasz (HTTP %1$d): %2$s"
+
+msgid "unknown name"
+msgstr "ismeretlen név"
+
+msgid "Instance"
+msgstr "Instance"
+
+msgid "Username"
+msgstr "Felhasználónév"
+
+msgid "Without the @ sign. Only used to link to your profile on older posts."
+msgstr "Kukac nélkül. Csak arra kell, hogy a régebbi bejegyzéseknél a profilodra tudjunk linkelni."
+
+#, php-format
+msgid "Mastodon: Preferences, Development, New application. Required scope: %s."
+msgstr "Mastodon: Preferences, Development, New application. Szükséges jogosultság: %s."
+
+msgid "Mastodon credentials are missing."
+msgstr "Hiányoznak a Mastodon adatok."
+
+#, php-format
+msgid "Mastodon error (HTTP %1$d): %2$s"
+msgstr "Mastodon hiba (HTTP %1$d): %2$s"
+
+#~ msgid "These posts did not go out after three attempts. Retrying only touches the platforms that are still missing."
+#~ msgstr "Ezek a bejegyzések három próbálkozás után sem mentek ki. Az újrapróbálás csak a hiányzó platformokra megy ki."
