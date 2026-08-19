@@ -3,6 +3,21 @@
 Jetpacktől független megoldás: publikáláskor automatikusan kiposztol
 Bluesky-ra és Mastodonra.
 
+## Újdonságok a 2.0-ban
+
+- **Kiválaszthatod, mely bejegyzéstípusok menjenek ki.** A Beállítások lap
+  tetején most már ott a lista a publikus típusokkal. Eddig a beállítás létezett
+  a kódban, de nem lehetett hozzáférni, és mindig csak a bejegyzések mentek.
+- **A reménytelen hibán nem rágódik negyedórát.** Ha hiányzik vagy rossz a
+  token, azt azonnal kiírja a hibalistára, mert azon a várakozás nem segít. Az
+  időtúllépést és a szerverhibát viszont ugyanúgy háromszor újrapróbálja, mint
+  eddig.
+- **Belül szétszedtük.** Egy hálózat mostantól egy fájl: a Bluesky, a Mastodon
+  és a LinkedIn is külön osztály egy közös interfész mögött. Kívülről semmi nem
+  változott, de egy negyedik hálózat hozzáadása már nem négy helyen való
+  turkálás. Ha bővítenéd, három szűrő van hozzá: `kobak_social_platforms`,
+  `kobak_social_message` és `kobak_social_syndication_urls`.
+
 ## Újdonságok az 1.4-ben
 
 - **A tokenek nem látszanak többé a beállítóoldal forrásában.** Eddig minden

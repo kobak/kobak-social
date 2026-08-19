@@ -4,7 +4,7 @@ Tags: bluesky, mastodon, indieweb, syndication, webmention
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.4.0
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,14 @@ Yes. Every request goes through `wp_remote_*`, which falls back to a stream base
 3. The log, showing what was sent where.
 
 == Changelog ==
+
+= 2.0.0 =
+* Each network now lives in a single file behind a `Kobak_Social_Platform` interface, instead of being wired into four places. Adding a network no longer means editing existing code
+* New filters for anyone extending the plugin: `kobak_social_platforms` to register a network, `kobak_social_message` to override the text per network, and `kobak_social_syndication_urls` to change the syndication links
+* The plugin file is split into `includes/`, with one file per network under `includes/platforms/`
+* The post types to share can now actually be chosen. The setting existed before but had no form field and always fell back to posts
+* Failures that retrying cannot fix no longer run through three retry rounds. A missing or invalid credential, or any 4xx other than 408 and 429, is reported at once instead of a quarter of an hour later; timeouts, 5xx, 408 and 429 are retried as before
+* Nothing else changed on purpose: the settings, the stored data and every message are the same as in 1.4.0
 
 = 1.4.0 =
 * Security: saved tokens and app passwords are no longer written back into the settings page HTML

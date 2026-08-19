@@ -3,7 +3,7 @@
  * Plugin Name:       kobak social: share posts to Mastodon and Bluesky
  * Plugin URI:        https://kobak.org/plugins/
  * Description:       Automatically shares every new post to Bluesky and Mastodon, with optional LinkedIn support. Adds u-syndication links for IndieWeb setups.
- * Version:           1.4.0
+ * Version:           2.0.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Koren Balázs
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KOBAK_SOCIAL_VERSION', '1.4.0' );
+define( 'KOBAK_SOCIAL_VERSION', '2.0.0' );
 define( 'KOBAK_SOCIAL_OPTION', 'kobak_social_settings' );
 define( 'KOBAK_SOCIAL_LOG', 'kobak_social_log' );
 define( 'KOBAK_SOCIAL_DONE_META', '_kobak_social_done' );
