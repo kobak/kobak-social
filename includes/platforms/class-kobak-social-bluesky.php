@@ -24,7 +24,11 @@ class Kobak_Social_Bluesky implements Kobak_Social_Platform {
 	}
 
 	public function is_enabled( $settings ) {
-		return true;
+		// Egy be sem állított hálózatra nem akarunk posztolni, tehát arról nem is
+		// hiba, ha nem megy ki — csendben kimarad. Ha viszont bármelyik mező ki van
+		// töltve, a felhasználó nekikezdett: onnantól a hiányzó másik mező valódi
+		// hiba, amiről szólni kell, nem pedig néma kihagyás.
+		return ! empty( $settings['bsky_handle'] ) || ! empty( $settings['bsky_app_password'] );
 	}
 
 	public function settings_fields( $settings ) {

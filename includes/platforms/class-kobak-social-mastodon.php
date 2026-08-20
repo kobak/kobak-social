@@ -24,7 +24,11 @@ class Kobak_Social_Mastodon implements Kobak_Social_Platform {
 	}
 
 	public function is_enabled( $settings ) {
-		return true;
+		// A token az egyetlen mező, ami azt jelenti, hogy ide posztolni akarunk: az
+		// instance alapértelmezett értékkel jön, a felhasználónév pedig csak a régi
+		// bejegyzések profillinkjéhez kell. Token nélkül tehát nincs beállítva a
+		// Mastodon, és az nem hiba, csak kimarad.
+		return ! empty( $settings['mastodon_token'] );
 	}
 
 	public function settings_fields( $settings ) {

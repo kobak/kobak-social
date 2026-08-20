@@ -3,6 +3,19 @@
 Jetpacktől független megoldás: publikáláskor automatikusan kiposztol
 Bluesky-ra és Mastodonra.
 
+## Újdonságok a 2.0.1-ben
+
+- **Amit nem állítottál be, arra nem panaszkodik.** Eddig a Bluesky és a
+  Mastodon minden bejegyzésnél megpróbálkozott, akkor is, ha egy sor beállítás
+  sem volt hozzá — így aki csak az egyiket használja, piros hibacsíkot kapott az
+  adminban olyasmiért, amit nem is akart. Mostantól a be nem állított hálózat
+  egyszerűen kimarad.
+- **A félbehagyott beállításról viszont szól.** Ha beírtad a Bluesky handle-t,
+  de az app jelszót még nem, azt továbbra is hibaként jelzi — mert ott tényleg
+  hiányzik valami, nem pedig nem akarod használni.
+- A korábban összegyűlt, nem használt hálózatokhoz tartozó hibabejegyzések
+  maguktól kitakarítódnak.
+
 ## Újdonságok a 2.0-ban
 
 - **Kiválaszthatod, mely bejegyzéstípusok menjenek ki.** A Beállítások lap

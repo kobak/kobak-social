@@ -4,7 +4,7 @@ Tags: bluesky, mastodon, indieweb, syndication, webmention
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,12 @@ Yes. Every request goes through `wp_remote_*`, which falls back to a stream base
 3. The log, showing what was sent where.
 
 == Changelog ==
+
+= 2.0.1 =
+* A network you have not set up is no longer reported as a failed share. Bluesky and Mastodon were attempted on every post even with no credentials at all, so anyone using just one of them collected a permanent red error notice in the admin for something they never wanted
+* A network is now attempted once you have started setting it up, so a half-finished setup — a Bluesky handle with no app password — still tells you what is missing instead of going quiet
+* Failed-share records left over from networks you do not use are cleared automatically
+* Tested up to WordPress 7.1
 
 = 2.0.0 =
 * Each network now lives in a single file behind a `Kobak_Social_Platform` interface, instead of being wired into four places. Adding a network no longer means editing existing code

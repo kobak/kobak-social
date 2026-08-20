@@ -61,7 +61,7 @@ function kobak_social_admin_notices() {
 		return;
 	}
 
-	$failures = get_option( KOBAK_SOCIAL_FAILURES, array() );
+	$failures = kobak_social_pending_failures();
 	$items    = array();
 
 	// A saját beállítóoldalunkon külön szakasz sorolja fel ugyanezt, gombbal együtt.
@@ -175,7 +175,7 @@ function kobak_social_settings_page() {
 	// Sikertelen megosztások újrapróbálása. Csak a hiányzó platformokra megy ki,
 	// a sikeres poszt nem megy ki még egyszer.
 	if ( isset( $_POST['kobak_social_retry_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['kobak_social_retry_nonce'] ) ), 'kobak_social_retry' ) ) {
-		$pending = get_option( KOBAK_SOCIAL_FAILURES, array() );
+		$pending = kobak_social_pending_failures();
 		$stuck   = 0;
 		$now     = kobak_social_get_settings();
 		$blocked = empty( $now['enabled'] );
@@ -341,8 +341,8 @@ function kobak_social_settings_page() {
 		</form>
 
 		<?php
-		$failures = get_option( KOBAK_SOCIAL_FAILURES, array() );
-		if ( is_array( $failures ) && $failures ) :
+		$failures = kobak_social_pending_failures();
+		if ( $failures ) :
 			?>
 		<hr>
 		<h2><?php esc_html_e( 'Failed shares', 'kobak-social' ); ?></h2>

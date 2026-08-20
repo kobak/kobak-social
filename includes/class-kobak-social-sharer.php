@@ -282,6 +282,43 @@ function kobak_social_recorded_failures( $post_id ) {
 	return array_values( (array) $failures[ (int) $post_id ]['platforms'] );
 }
 
+/**
+ * A hibalista karbantartva. Kikerül belőle a törölt bejegyzés és az a platform,
+ * ami időközben kikerült a beállításokból — egy be sem állított hálózat ne
+ * figyelmeztessen minden admin oldalon olyasmiért, amit nem is akartunk.
+ *
+ * Csak akkor ír, ha tényleg változott valami.
+ *
+ * @return array A megtisztított lista.
+ */
+function kobak_social_pending_failures() {
+	$failures = get_option( KOBAK_SOCIAL_FAILURES, array() );
+	if ( ! is_array( $failures ) ) {
+		return array();
+	}
+
+	$active = kobak_social_active_platforms( kobak_social_get_settings() );
+	$clean  = array();
+
+	foreach ( $failures as $failed_id => $row ) {
+		if ( ! get_post( $failed_id ) ) {
+			continue;
+		}
+		$platforms = isset( $row['platforms'] ) ? array_values( array_intersect( (array) $row['platforms'], $active ) ) : array();
+		if ( ! $platforms ) {
+			continue;
+		}
+		$row['platforms']    = $platforms;
+		$clean[ $failed_id ] = $row;
+	}
+
+	if ( $clean !== $failures ) {
+		update_option( KOBAK_SOCIAL_FAILURES, $clean, false );
+	}
+
+	return $clean;
+}
+
 function kobak_social_clear_failure( $post_id ) {
 	$failures = get_option( KOBAK_SOCIAL_FAILURES, array() );
 	if ( ! is_array( $failures ) || ! isset( $failures[ (int) $post_id ] ) ) {
