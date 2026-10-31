@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: kobak social 2.0.1\n"
+"Project-Id-Version: kobak social 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 16:03+0200\n"
+"POT-Creation-Date: 2026-10-31 16:28+0100\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,11 +22,23 @@ msgstr "kobak social: egy megosztás nem ment ki."
 msgid "Open the settings to retry"
 msgstr "Nyisd meg a beállításokat az újrapróbáláshoz"
 
+msgid "Hide these"
+msgstr "Elrejtés"
+
+msgid "kobak social: the LinkedIn token has expired."
+msgstr "kobak social: lejárt a LinkedIn-token."
+
+msgid "LinkedIn refused the last share with a 401, so nothing will go out there until you paste in a new token."
+msgstr "A LinkedIn 401-gyel utasította vissza a legutóbbi megosztást, tehát addig nem megy ki oda semmi, amíg nem írsz be új tokent."
+
+msgid "Open the settings"
+msgstr "Beállítások megnyitása"
+
 msgid "kobak social: the LinkedIn token is about to expire."
 msgstr "kobak social: a LinkedIn token hamarosan lejár."
 
-msgid "LinkedIn tokens last about 60 days. Generate a new one and paste it into the settings before it stops working."
-msgstr "A LinkedIn tokenje nagyjából 60 napig él. Generálj újat, és másold be a beállításokba, mielőtt leáll."
+msgid "LinkedIn tokens last about 60 days."
+msgstr "A LinkedIn-tokenek nagyjából 60 napig élnek."
 
 msgid "Settings saved."
 msgstr "Beállítások elmentve."
@@ -160,11 +172,17 @@ msgstr "Teszt megosztás most"
 msgid "Failed shares"
 msgstr "Sikertelen megosztások"
 
-msgid "These posts did not go out. A timeout or an outage is retried three times before it lands here; a missing or invalid credential lands here at once, because waiting cannot fix it. The log below says which happened. Retrying only touches the platforms that are still missing."
-msgstr "Ezek a bejegyzések nem mentek ki. Az időtúllépést és a kimaradást háromszor próbálja újra, mielőtt idekerülne; a hiányzó vagy hibás hitelesítő adat viszont azonnal itt köt ki, mert azon a várakozás nem segít. Az alábbi naplóból derül ki, melyik történt. Az újrapróbálás csak a még hiányzó platformokat érinti."
+msgid "These posts did not go out. A timeout or an outage is retried three times before it lands here; a missing or invalid credential lands here at once, because waiting cannot fix it. The log below says which happened. Retrying only touches the platforms that are still missing, and hiding an entry takes it off this list without marking the post as shared."
+msgstr "Ezek a bejegyzések nem mentek ki. Az időtúllépést és a kimaradást háromszor próbálja újra, mielőtt idekerülne; a hiányzó vagy hibás hitelesítő adat viszont azonnal itt köt ki, mert azon a várakozás nem segít. Az alábbi naplóból derül ki, melyik történt. Az újrapróbálás csak a még hiányzó platformokat érinti, az elrejtés pedig csak a listáról veszi le a sort — nem jelöli kiküldöttnek a bejegyzést."
+
+msgid "Hide"
+msgstr "Elrejtés"
 
 msgid "Retry now"
 msgstr "Újrapróbálás most"
+
+msgid "Hide all"
+msgstr "Mind elrejtése"
 
 msgid "Log"
 msgstr "Napló"
@@ -228,9 +246,8 @@ msgstr "Választható. A LinkedIn nem ad közös API-hozzáférést, ezért saj�
 msgid "Access token"
 msgstr "Access token"
 
-#, php-format
-msgid "Generate it with the LinkedIn OAuth token generator, not the Client Secret. Required scopes: %s."
-msgstr "A LinkedIn OAuth token generátorával állítsd elő, nem a Client Secret kell ide. Szükséges jogosultságok: %s."
+msgid "Use the token generator, not the Client Secret — they look similar and the Client Secret will not work."
+msgstr "A token-generátort használd, ne a Client Secretet — hasonlóan néznek ki, de a Client Secret nem működik."
 
 msgid "LinkedIn tokens expire after about 60 days and have to be generated again."
 msgstr "A LinkedIn tokenek kb. 60 nap után lejárnak, akkor újat kell generálni."
@@ -252,6 +269,13 @@ msgstr "API verzió"
 
 msgid "YYYYMM format. LinkedIn supports each version for about a year, then this has to be bumped."
 msgstr "ÉÉÉÉHH formátum. A LinkedIn nagyjából egy évig támogat egy verziót, utána itt kell átírni."
+
+#, php-format
+msgid "Open the %1$s, pick your app, tick %2$s, and copy the generated token into the Access token field above. LinkedIn does not refresh these automatically, so this is a manual step every couple of months."
+msgstr "Nyisd meg a(z) %1$s oldalt, válaszd ki az appodat, pipáld be ezeket: %2$s, és másold be a kapott tokent a fenti Access token mezőbe. A LinkedIn ezeket nem újítja meg magától, tehát ez kéthavonta egy kézi lépés."
+
+msgid "LinkedIn token generator"
+msgstr "LinkedIn token-generátor"
 
 msgid "No LinkedIn access token."
 msgstr "Nincs LinkedIn access token."
@@ -326,6 +350,13 @@ msgstr "Hiányoznak a Mastodon adatok."
 #, php-format
 msgid "Mastodon error (HTTP %1$d): %2$s"
 msgstr "Mastodon hiba (HTTP %1$d): %2$s"
+
+#~ msgid "LinkedIn tokens last about 60 days. Generate a new one and paste it into the settings before it stops working."
+#~ msgstr "A LinkedIn tokenje nagyjából 60 napig él. Generálj újat, és másold be a beállításokba, mielőtt leáll."
+
+#, php-format
+#~ msgid "Generate it with the LinkedIn OAuth token generator, not the Client Secret. Required scopes: %s."
+#~ msgstr "A LinkedIn OAuth token generátorával állítsd elő, nem a Client Secret kell ide. Szükséges jogosultságok: %s."
 
 #~ msgid "These posts did not go out after three attempts. Retrying only touches the platforms that are still missing."
 #~ msgstr "Ezek a bejegyzések három próbálkozás után sem mentek ki. Az újrapróbálás csak a hiányzó platformokra megy ki."

@@ -4,7 +4,7 @@ Tags: bluesky, mastodon, indieweb, syndication, webmention
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.0.1
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,12 @@ Yes. Every request goes through `wp_remote_*`, which falls back to a stream base
 3. The log, showing what was sent where.
 
 == Changelog ==
+
+= 2.1.0 =
+* Failed shares can now be hidden. Retrying does not always help — a post that will never go out used to sit in the admin notice forever, with only a Retry button that could not fix it. There is now a Hide link on the notice and on each entry in the settings, plus Hide all. Hiding only clears the entry; it does not mark the post as shared, and the log keeps the record
+* LinkedIn: when the token expires, the plugin says so. A 401 from LinkedIn is now recognised as an expired token and reported as such, instead of a generic "a share did not go out"
+* LinkedIn: the renewal steps are spelled out wherever they are needed — under the token field, in the 50-day warning and in the expiry notice — with a direct link to the token generator and the scopes to tick. LinkedIn issues no refresh token for standard apps, so this is a manual step every couple of months and the plugin now walks you through it
+* The expiry warning clears itself once a working token is saved or the connection check succeeds
 
 = 2.0.1 =
 * A network you have not set up is no longer reported as a failed share. Bluesky and Mastodon were attempted on every post even with no credentials at all, so anyone using just one of them collected a permanent red error notice in the admin for something they never wanted

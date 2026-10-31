@@ -50,6 +50,48 @@ function kobak_social_secret_value( $name, $current ) {
  * Feladott megosztás és lejáró LinkedIn-token: mindkettőről szólni kell,
  * mert a napló aljára magától senki nem néz.
  */
+/**
+ * Hibabejegyzés elrejtése. Az újrapróbálás nem mindig old meg valamit — ha egy
+ * poszt véglegesen nem megy ki, legyen mód letenni, különben a figyelmeztetés
+ * örökre ott marad. A bejegyzésre nem kerül jelölés: a naplóban megmarad, mi
+ * történt, és később kézzel még kiküldhető.
+ */
+function kobak_social_handle_dismiss() {
+	if ( ! isset( $_GET['kobak_social_dismiss'] ) ) {
+		return;
+	}
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	check_admin_referer( 'kobak_social_dismiss' );
+
+	$what = sanitize_text_field( wp_unslash( $_GET['kobak_social_dismiss'] ) );
+
+	if ( 'all' === $what ) {
+		$count = count( (array) get_option( KOBAK_SOCIAL_FAILURES, array() ) );
+		update_option( KOBAK_SOCIAL_FAILURES, array(), false );
+		if ( $count ) {
+			kobak_social_log( sprintf( 'dismissed %d failed share(s)', $count ) );
+		}
+	} else {
+		$dismiss_id = (int) $what;
+		if ( $dismiss_id ) {
+			kobak_social_clear_failure( $dismiss_id );
+			kobak_social_log( sprintf( '#%d dismissed from the failed shares', $dismiss_id ) );
+		}
+	}
+
+	wp_safe_redirect( remove_query_arg( array( 'kobak_social_dismiss', '_wpnonce' ) ) );
+	exit;
+}
+
+/**
+ * Elrejtő hivatkozás. Az aktuális oldalra mutat vissza, nonce-szal védve.
+ */
+function kobak_social_dismiss_url( $what ) {
+	return wp_nonce_url( add_query_arg( 'kobak_social_dismiss', $what ), 'kobak_social_dismiss' );
+}
+
 function kobak_social_admin_notices() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
@@ -81,15 +123,30 @@ function kobak_social_admin_notices() {
 	if ( $items ) {
 		echo '<div class="notice notice-error"><p><strong>' . esc_html__( 'kobak social: a share did not go out.', 'kobak-social' ) . '</strong> ' .
 			esc_html( implode( ' - ', $items ) ) . ' <a href="' . esc_url( admin_url( 'options-general.php?page=kobak-social' ) ) . '">' .
-			esc_html__( 'Open the settings to retry', 'kobak-social' ) . '</a></p></div>';
+			esc_html__( 'Open the settings to retry', 'kobak-social' ) . '</a> &middot; <a href="' . esc_url( kobak_social_dismiss_url( 'all' ) ) . '">' .
+			esc_html__( 'Hide these', 'kobak-social' ) . '</a></p></div>';
 	}
 
-	$s = kobak_social_get_settings();
+	$s        = kobak_social_get_settings();
+	$linkedin = Kobak_Social_Registry::get( 'linkedin' );
+
+	// Lejárt token: ezt a megosztási útvonal jegyezte fel egy 401-ből. Előbbre
+	// való, mint az 50 napos előrejelzés, ezért ha ez áll fenn, csak ez látszik.
+	if ( $linkedin && ! empty( $s['linkedin_enabled'] ) && ! empty( $s['linkedin_token'] ) && $linkedin->is_expired() ) {
+		echo '<div class="notice notice-error"><p><strong>' . esc_html__( 'kobak social: the LinkedIn token has expired.', 'kobak-social' ) . '</strong> ' .
+			esc_html__( 'LinkedIn refused the last share with a 401, so nothing will go out there until you paste in a new token.', 'kobak-social' ) . ' ' .
+			$linkedin->renewal_help() . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- a renewal_help() maga escapel.
+			' <a href="' . esc_url( admin_url( 'options-general.php?page=kobak-social' ) ) . '">' . esc_html__( 'Open the settings', 'kobak-social' ) . '</a></p></div>';
+		return;
+	}
+
 	if ( ! empty( $s['linkedin_enabled'] ) && ! empty( $s['linkedin_token_saved'] ) ) {
 		$days = ( time() - (int) $s['linkedin_token_saved'] ) / DAY_IN_SECONDS;
 		if ( $days >= 50 ) {
 			echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'kobak social: the LinkedIn token is about to expire.', 'kobak-social' ) . '</strong> ' .
-				esc_html__( 'LinkedIn tokens last about 60 days. Generate a new one and paste it into the settings before it stops working.', 'kobak-social' ) . '</p></div>';
+				esc_html__( 'LinkedIn tokens last about 60 days.', 'kobak-social' ) . ' ' .
+				( $linkedin ? $linkedin->renewal_help() : '' ) . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- a renewal_help() maga escapel.
+				'</p></div>';
 		}
 	}
 }
@@ -346,7 +403,7 @@ function kobak_social_settings_page() {
 			?>
 		<hr>
 		<h2><?php esc_html_e( 'Failed shares', 'kobak-social' ); ?></h2>
-		<p><?php esc_html_e( 'These posts did not go out. A timeout or an outage is retried three times before it lands here; a missing or invalid credential lands here at once, because waiting cannot fix it. The log below says which happened. Retrying only touches the platforms that are still missing.', 'kobak-social' ); ?></p>
+		<p><?php esc_html_e( 'These posts did not go out. A timeout or an outage is retried three times before it lands here; a missing or invalid credential lands here at once, because waiting cannot fix it. The log below says which happened. Retrying only touches the platforms that are still missing, and hiding an entry takes it off this list without marking the post as shared.', 'kobak-social' ); ?></p>
 		<ul style="list-style:disc;margin-left:1.5em">
 			<?php foreach ( $failures as $failed_id => $row ) : ?>
 				<?php
@@ -362,12 +419,14 @@ function kobak_social_settings_page() {
 					<a href="<?php echo esc_url( get_edit_post_link( $failed_id ) ); ?>"><?php echo esc_html( get_the_title( $failed_id ) ); ?></a>
 					— <?php echo esc_html( implode( ', ', $labels ) ); ?>
 					<span style="opacity:.7">(<?php echo esc_html( $row['time'] ); ?>)</span>
+					<a href="<?php echo esc_url( kobak_social_dismiss_url( $failed_id ) ); ?>" style="margin-left:.5em"><?php esc_html_e( 'Hide', 'kobak-social' ); ?></a>
 				</li>
 			<?php endforeach; ?>
 		</ul>
 		<form method="post">
 			<?php wp_nonce_field( 'kobak_social_retry', 'kobak_social_retry_nonce' ); ?>
-			<?php submit_button( __( 'Retry now', 'kobak-social' ), 'secondary' ); ?>
+			<?php submit_button( __( 'Retry now', 'kobak-social' ), 'secondary', 'submit', false ); ?>
+			<a href="<?php echo esc_url( kobak_social_dismiss_url( 'all' ) ); ?>" class="button"><?php esc_html_e( 'Hide all', 'kobak-social' ); ?></a>
 		</form>
 		<?php endif; ?>
 

@@ -3,6 +3,24 @@
 Jetpacktől független megoldás: publikáláskor automatikusan kiposztol
 Bluesky-ra és Mastodonra.
 
+## Újdonságok a 2.1-ben
+
+- **A sikertelen megosztást el lehet tüntetni.** Eddig csak „Újrapróbálás" volt,
+  ami nem mindig segít: ha egy poszt véglegesen nem ment ki, a figyelmeztetés
+  örökre ott maradt. Most a figyelmeztetésen és a beállítóoldal listájában is
+  van egy „Hide" link, plusz egy „Hide all". Az elrejtés csak a listáról veszi
+  le — nem jelöli kiküldöttnek a bejegyzést, és a naplóban megmarad, mi történt.
+- **Ha lejár a LinkedIn-token, a plugin megmondja.** A LinkedIn 401-es válaszát
+  mostantól lejárt tokenként ismeri fel, és néven is nevezi, nem csak annyit ír,
+  hogy nem ment ki a poszt.
+- **Oda van írva, mit kell csinálni.** A token mezője alatt, az 50 napos
+  figyelmeztetésben és a lejáratkor is ott a közvetlen link a LinkedIn
+  token-generátorára, és hogy melyik három scope-ot kell bepipálni. A LinkedIn
+  standard appoknak nem ad refresh tokent, tehát ezt tényleg kézzel kell
+  kéthavonta megtenni — legalább ne kelljen hozzá emlékezni.
+- A figyelmeztetés magától eltűnik, amint új, működő tokent mentesz, vagy
+  lefuttatod a kapcsolat-ellenőrzést.
+
 ## Újdonságok a 2.0.1-ben
 
 - **Amit nem állítottál be, arra nem panaszkodik.** Eddig a Bluesky és a

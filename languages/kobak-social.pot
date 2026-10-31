@@ -6,15 +6,15 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: kobak social 2.0.1\n"
+"Project-Id-Version: kobak social 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 16:03+0200\n"
+"POT-Creation-Date: 2026-10-31 16:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
@@ -30,10 +30,22 @@ msgstr ""
 msgid "Open the settings to retry"
 msgstr ""
 
+msgid "Hide these"
+msgstr ""
+
+msgid "kobak social: the LinkedIn token has expired."
+msgstr ""
+
+msgid "LinkedIn refused the last share with a 401, so nothing will go out there until you paste in a new token."
+msgstr ""
+
+msgid "Open the settings"
+msgstr ""
+
 msgid "kobak social: the LinkedIn token is about to expire."
 msgstr ""
 
-msgid "LinkedIn tokens last about 60 days. Generate a new one and paste it into the settings before it stops working."
+msgid "LinkedIn tokens last about 60 days."
 msgstr ""
 
 msgid "Settings saved."
@@ -168,10 +180,16 @@ msgstr ""
 msgid "Failed shares"
 msgstr ""
 
-msgid "These posts did not go out. A timeout or an outage is retried three times before it lands here; a missing or invalid credential lands here at once, because waiting cannot fix it. The log below says which happened. Retrying only touches the platforms that are still missing."
+msgid "These posts did not go out. A timeout or an outage is retried three times before it lands here; a missing or invalid credential lands here at once, because waiting cannot fix it. The log below says which happened. Retrying only touches the platforms that are still missing, and hiding an entry takes it off this list without marking the post as shared."
+msgstr ""
+
+msgid "Hide"
 msgstr ""
 
 msgid "Retry now"
+msgstr ""
+
+msgid "Hide all"
 msgstr ""
 
 msgid "Log"
@@ -236,8 +254,7 @@ msgstr ""
 msgid "Access token"
 msgstr ""
 
-#, php-format
-msgid "Generate it with the LinkedIn OAuth token generator, not the Client Secret. Required scopes: %s."
+msgid "Use the token generator, not the Client Secret — they look similar and the Client Secret will not work."
 msgstr ""
 
 msgid "LinkedIn tokens expire after about 60 days and have to be generated again."
@@ -259,6 +276,13 @@ msgid "API version"
 msgstr ""
 
 msgid "YYYYMM format. LinkedIn supports each version for about a year, then this has to be bumped."
+msgstr ""
+
+#, php-format
+msgid "Open the %1$s, pick your app, tick %2$s, and copy the generated token into the Access token field above. LinkedIn does not refresh these automatically, so this is a manual step every couple of months."
+msgstr ""
+
+msgid "LinkedIn token generator"
 msgstr ""
 
 msgid "No LinkedIn access token."

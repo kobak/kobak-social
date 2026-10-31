@@ -49,12 +49,11 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 				<?php kobak_social_secret_field( 'linkedin_token', $s['linkedin_token'] ); ?>
 				<p class="description">
 					<?php
-					printf(
-						/* translators: %s: the list of required LinkedIn scopes, wrapped in code tags. */
-						esc_html__( 'Generate it with the LinkedIn OAuth token generator, not the Client Secret. Required scopes: %s.', 'kobak-social' ),
-						'<code>w_member_social</code>, <code>openid</code>, <code>profile</code>'
-					);
+					// A megújítás menete egy helyen van megfogalmazva, mert a lejárat
+					// figyelmeztetésében és a 401-es hibánál is ugyanerre van szükség.
+					echo $this->renewal_help(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- a renewal_help() maga escapel, és csak saját markupot told be.
 					?>
+					<br><?php esc_html_e( 'Use the token generator, not the Client Secret — they look similar and the Client Secret will not work.', 'kobak-social' ); ?>
 					<br><?php esc_html_e( 'LinkedIn tokens expire after about 60 days and have to be generated again.', 'kobak-social' ); ?>
 					<?php
 					$kobak_token_saved = (int) $s['linkedin_token_saved'];
@@ -92,6 +91,49 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 	/**
 	 * A LinkedIn mezők beolvasása mentéskor. A nonce-ot a hívó már ellenőrizte.
 	 */
+	/**
+	 * A token megújításának menete. Három helyen kell ugyanaz: a mező alatt, az
+	 * 50 napos figyelmeztetésben és akkor, amikor a LinkedIn 401-gyel elutasít.
+	 * Standard appnál nincs refresh token, tehát ezt tényleg kézzel kell megtenni.
+	 *
+	 * @return string Kész HTML.
+	 */
+	public function renewal_help() {
+		return sprintf(
+			/* translators: 1: link to the LinkedIn token generator, 2: the required scopes, wrapped in code tags. */
+			esc_html__( 'Open the %1$s, pick your app, tick %2$s, and copy the generated token into the Access token field above. LinkedIn does not refresh these automatically, so this is a manual step every couple of months.', 'kobak-social' ),
+			'<a href="https://www.linkedin.com/developers/tools/oauth/token-generator" target="_blank" rel="noopener noreferrer">' . esc_html__( 'LinkedIn token generator', 'kobak-social' ) . '</a>',
+			'<code>w_member_social</code>, <code>openid</code>, <code>profile</code>'
+		);
+	}
+
+	/**
+	 * Lejárt-e a token. A 401-et a megosztási útvonal jegyzi fel, mert különben
+	 * csak a naplóból derülne ki, és a felhasználó napokig keresné, mi a baj.
+	 */
+	public function is_expired() {
+		return (bool) get_option( KOBAK_SOCIAL_LI_EXPIRED, 0 );
+	}
+
+	/**
+	 * A hitelesítés állapotának feljegyzése egy hívás eredménye alapján.
+	 * Sikernél töröljük a jelölést, 401-nél felvesszük.
+	 */
+	private function note_auth_state( $result ) {
+		if ( ! is_wp_error( $result ) ) {
+			delete_option( KOBAK_SOCIAL_LI_EXPIRED );
+			return $result;
+		}
+
+		$data   = $result->get_error_data();
+		$status = ( is_array( $data ) && isset( $data['status'] ) ) ? (int) $data['status'] : 0;
+		if ( 401 === $status || 'kobak_social_li_401' === $result->get_error_code() ) {
+			update_option( KOBAK_SOCIAL_LI_EXPIRED, time(), false );
+		}
+
+		return $result;
+	}
+
 	public function save_fields( $current ) {
 		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		$new = array(
@@ -106,6 +148,9 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 		$new['linkedin_token_saved'] = (int) $current['linkedin_token_saved'];
 		if ( $new['linkedin_token'] !== $current['linkedin_token'] ) {
 			$new['linkedin_token_saved'] = $new['linkedin_token'] ? time() : 0;
+			// Új tokennel a lejárat-jelzés okafogyottá válik; ha mégis rossz, az
+			// első megosztás úgyis visszateszi.
+			delete_option( KOBAK_SOCIAL_LI_EXPIRED );
 		}
 
 		return $new;
@@ -279,7 +324,7 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 
 		$author = $this->author_urn( $s );
 		if ( is_wp_error( $author ) ) {
-			return $author;
+			return $this->note_auth_state( $author );
 		}
 
 		$text = kobak_social_build_message( $post, $this->limit() );
@@ -335,8 +380,11 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 		if ( $code < 200 || $code >= 300 ) {
 			// A data-ban visszaadott státusz alapján dönti el az újrapróbálkozás logikája,
 			// hogy végleges-e a hiba — az üzenet szövege emiatt nem változik.
-			return new WP_Error( 'kobak_social_li_post', sprintf( /* translators: 1: HTTP status code, 2: error response from the LinkedIn API. */ __( 'LinkedIn error (HTTP %1$d): %2$s', 'kobak-social' ), (int) $code, wp_remote_retrieve_body( $res ) ), array( 'status' => (int) $code ) );
+			return $this->note_auth_state( new WP_Error( 'kobak_social_li_post', sprintf( /* translators: 1: HTTP status code, 2: error response from the LinkedIn API. */ __( 'LinkedIn error (HTTP %1$d): %2$s', 'kobak-social' ), (int) $code, wp_remote_retrieve_body( $res ) ), array( 'status' => (int) $code ) ) );
 		}
+
+		// Ideáig csak élő tokennel jutunk el, tehát a lejárat-jelzést törölhetjük.
+		$this->note_auth_state( true );
 
 		$urn = wp_remote_retrieve_header( $res, 'x-restli-id' );
 		if ( $urn ) {
@@ -380,7 +428,7 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 		$body = json_decode( wp_remote_retrieve_body( $res ), true );
 
 		if ( 401 === $code ) {
-			return new WP_Error( 'kobak_social_li_401', __( 'The token is invalid or has expired (401). Generate a new one in your LinkedIn app.', 'kobak-social' ) );
+			return $this->note_auth_state( new WP_Error( 'kobak_social_li_401', __( 'The token is invalid or has expired (401). Generate a new one in your LinkedIn app.', 'kobak-social' ) ) );
 		}
 		if ( 403 === $code ) {
 			return new WP_Error( 'kobak_social_li_403', __( 'The token works but a permission is missing (403). You need the openid, profile and w_member_social scopes.', 'kobak-social' ) );
@@ -394,6 +442,10 @@ class Kobak_Social_LinkedIn implements Kobak_Social_Platform {
 		$urn = 'urn:li:person:' . $body['sub'];
 		$s['linkedin_author_urn'] = $urn;
 		update_option( KOBAK_SOCIAL_OPTION, $s, false );
+
+		// Működő tokennel a lejárat-jelzés törlődik, így a figyelmeztetés eltűnik
+		// anélkül, hogy a felhasználónak külön el kellene tüntetnie.
+		$this->note_auth_state( true );
 
 		$nev = ! empty( $body['name'] ) ? $body['name'] : __( 'unknown name', 'kobak-social' );
 
